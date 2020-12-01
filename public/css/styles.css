@@ -402,3 +402,22 @@ input[type="password"]:focus {
   text-align: center;
   margin-top: 150px;
 }
+
+
+
+
+
+#randomBlogitList {
+  display: flex;
+  /*border: 1px solid black;*/
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
+  word-break: break-all;
+}
+
+
+#randomBlogitList li {
+  border: 1px solid black; 
+
+}
