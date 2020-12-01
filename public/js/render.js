@@ -47,10 +47,12 @@ async function renderRandomBlogs() {
   for (var b = 0; b < randomBlogit.length; b++) {
     var blogi = randomBlogit[b];
 
-    randomBlogsit.innerHTML += "<img></img>"
-    randomBlogsit.innerHTML += "<h3>" + blogi.Title + "</h3>"
-    randomBlogsit.innerHTML += "<p>Likes: " + blogi.amountOfLikes + "</p>"
-    randomBlogsit.innerHTML += "<p>User: " + blogi.UserID + "</p>" // tee nimen haku users taulusta
+    randomBlogsit.innerHTML += `<li>
+                                <img></img>
+                                <h3> ` + blogi.Title + `</h3>
+                                <p>Likes: `+ blogi.amountOfLikes + `</p>
+                                <p>User: `+ blogi.UserID + `</p>
+                                </li>`;
   }
 }
 
@@ -150,7 +152,6 @@ signupForm.addEventListener("submit", async (evt) => {
   getUsers();
 });
 
-
 loginForm.addEventListener("submit", async (evt) => {
   evt.preventDefault();
 
@@ -196,7 +197,6 @@ loginForm.addEventListener("submit", async (evt) => {
     getUsers();
   }
 });
-
 
 navLogout.addEventListener("click", async (evt) => {
   evt.preventDefault();
