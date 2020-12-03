@@ -27,6 +27,20 @@ const getBlogById = async (id) => {
   }
 };
 
+const getBlogsByUserId = async (id) => {
+  try {
+    const [rows] = await promisePool.execute(
+      "SELECT * FROM post WHERE UserID = ?",
+      [id]
+    );
+    console.log("rows", rows);
+    return rows;
+  } catch (e) {
+    console.log("blogModel error:", e.message);
+    return { error: "Error" };
+  }
+};
+
 const getBlogBySearchParam = async (searchparam) => {
   try {
     const [rows] = await promisePool.execute(
@@ -87,11 +101,57 @@ const removeLike = async (id) => {
   }
 };
 
+const addBlog = async (params) => {
+  try {
+    const [rows] = await promisePool.execute(
+        'INSERT INTO post (Title, CreateAt, Content) VALUES (?, NOW(), ?)',
+        params
+    );
+    console.log('rows', rows);
+    return rows;
+  } catch (e) {
+    console.log('blogModel error', e.message);
+    return {error: 'Error'};
+  }
+}
+
+const updateBlog = async (params) => {
+  try {
+    const [rows] = await promisePool.execute(
+        'UPDATE post SET Title = ?, UpdateAt = NOW(), Content = ? WHERE ID = ?',
+        params
+    );
+    console.log('rows', rows);
+    return rows;
+  } catch (e) {
+    console.log('blogModel error', e.message);
+    return {error: 'Error'};
+  }
+}
+
+const deleteBlog = async (id) => {
+  try {
+    const [rows] = await promisePool.execute('DELETE FROM post WHERE ID = ?',
+        [id]);
+    console.log('rows', rows);
+    return rows;
+  } catch (e) {
+    console.log('blogModel error', e.message);
+    return {error: 'Error'};
+  }
+}
+
+
+
 module.exports = {
   getAllBlogs,
   getBlogById,
   getBlogBySearchParam,
   getRandomBlogs,
   addLike,
-  removeLike
+  removeLike,
+  addBlog,
+  updateBlog,
+  deleteBlog,
+  getBlogsByUserId
 };
