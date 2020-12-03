@@ -27,7 +27,7 @@ const blog_get = async (req, res) => {
 };
 
 const blog_list_getByUserId = async (req,res) => {
-  const UserId = req.params.UserId;
+  const UserId = req.params.id;
   const blogs = await blogModel.getBlogsByUserId(UserId);
   res.json(blogs);
 }
