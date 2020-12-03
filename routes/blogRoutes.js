@@ -24,9 +24,10 @@ const fileFilter = (req, file, cb) => {
 
 router.get("/", blogController.blog_list_get);
 router.get("/randomblogs", blogController.blog_list_getrandomblogs);
+router.get("/ByUser/:id", blogController.blog_list_getByUserId);
 
 router.get("/:id", blogController.blog_get);
-router.get("/search/:searchparam", blogController.blog_list_getbysearch)
+router.get("/search/:searchparam", blogController.blog_list_getbysearch);
 const upload = multer({ dest: "./uploads/", fileFilter });
 
 router.get("/addlike/:id", blogController.blog_AddLike);
