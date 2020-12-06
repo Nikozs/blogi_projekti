@@ -5,11 +5,11 @@ const promisePool = pool.promise();
 const getAllBlogs = async () => {
   try {
     const [rows] = await promisePool.query("SELECT * FROM post");
-    console.log("rows", rows);
+    //console.log("rows", rows);
     return rows;
   } catch (e) {
     console.log("blogModel error:", e.message);
-    return { error: "Error" };
+    return { error: "Error in getAllBlogs" };
   }
 };
 
@@ -19,11 +19,11 @@ const getBlogById = async (id) => {
       "SELECT * FROM post WHERE ID = ?",
       [id]
     );
-    console.log("rows", rows);
+    //console.log("rows", rows);
     return rows;
   } catch (e) {
     console.log("blogModel error:", e.message);
-    return { error: "Error" };
+    return { error: "Error in getBlogById" };
   }
 };
 
@@ -33,11 +33,11 @@ const getBlogsByUserId = async (id) => {
       "SELECT * FROM post WHERE UserID = ?",
       [id]
     );
-    console.log("rows", rows);
+    //console.log("rows", rows);
     return rows;
   } catch (e) {
     console.log("blogModel error:", e.message);
-    return { error: "Error" };
+    return { error: "Error in getBlogsByUserId"};
   }
 };
 
@@ -50,11 +50,11 @@ const getBlogBySearchParam = async (searchparam) => {
         searchparam +
         '%")'
     );
-    console.log("rows", rows);
+    //console.log("rows", rows);
     return rows;
   } catch (e) {
     console.log("blogModel error:", e.message);
-    return { error: "Error" };
+    return { error: "Error in getBlogBySearchParam" };
   }
 };
 
@@ -63,11 +63,24 @@ const getRandomBlogs = async () => {
     const [rows] = await promisePool.execute(
       "SELECT * FROM post ORDER BY RAND() LIMIT 10"
     );
-    console.log("rows", rows);
+    //console.log("rows", rows);
     return rows;
   } catch (e) {
     console.log("blogModel error:", e.message);
-    return { error: "Error" };
+    return { error: "Error in getRandomBlogs" };
+  }
+};
+
+const getPopularBlogs = async () => {
+  try {
+    const [rows] = await promisePool.execute(
+      "SELECT * FROM post ORDER BY amountOfLikes DESC LIMIT 10"
+    );
+    //console.log("rows", rows);
+    return rows;
+  } catch (e) {
+    console.log("blogModel error:", e.message);
+    return { error: "Error in getPopularBlogs" };
   }
 };
 
@@ -79,11 +92,11 @@ const addLike = async (id) => {
       "UPDATE post SET amountOfLikes=amountOfLikes+1 WHERE ID = ?",
       [id]
     );
-    console.log("rows", rows);
+    //console.log("rows", rows);
     return await getBlogById(id);
   } catch (e) {
     console.log("blogModel error:", e.message);
-    return { error: "Error" };
+    return { error: "Error in addLike" };
   }
 };
 
@@ -93,25 +106,25 @@ const removeLike = async (id) => {
       "UPDATE post SET amountOfLikes=amountOfLikes-1 WHERE ID = ? AND amountOfLikes>0",
       [id] 
     );
-    console.log("rows", rows);
+    //console.log("rows", rows);
     return await getBlogById(id);
   } catch (e) {
     console.log("blogModel error:", e.message);
-    return { error: "Error" };
+    return { error: "Error in removeLike" };
   }
 };
 
 const addBlog = async (params) => {
   try {
     const [rows] = await promisePool.execute(
-        'INSERT INTO post (Title, CreateAt, Content) VALUES (?, NOW(), ?)',
+        'INSERT INTO post (Title, CreateAt, Content, UserID) VALUES (?, NOW(), ?, ?)',
         params
     );
-    console.log('rows', rows);
+    //console.log('rows', rows);
     return rows;
   } catch (e) {
     console.log('blogModel error', e.message);
-    return {error: 'Error'};
+    return {error: 'Error in addBlog'};
   }
 }
 
@@ -121,11 +134,11 @@ const updateBlog = async (params) => {
         'UPDATE post SET Title = ?, UpdateAt = NOW(), Content = ? WHERE ID = ?',
         params
     );
-    console.log('rows', rows);
+    //console.log('rows', rows);
     return rows;
   } catch (e) {
     console.log('blogModel error', e.message);
-    return {error: 'Error'};
+    return {error: 'Error in updateBlog'};
   }
 }
 
@@ -133,15 +146,13 @@ const deleteBlog = async (id) => {
   try {
     const [rows] = await promisePool.execute('DELETE FROM post WHERE ID = ?',
         [id]);
-    console.log('rows', rows);
+    //console.log('rows', rows);
     return rows;
   } catch (e) {
     console.log('blogModel error', e.message);
-    return {error: 'Error'};
+    return {error: 'Error in deleteBlog'};
   }
 }
-
-
 
 module.exports = {
   getAllBlogs,
@@ -153,5 +164,6 @@ module.exports = {
   addBlog,
   updateBlog,
   deleteBlog,
-  getBlogsByUserId
+  getBlogsByUserId,
+  getPopularBlogs
 };
