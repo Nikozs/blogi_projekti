@@ -24,6 +24,7 @@ const fileFilter = (req, file, cb) => {
 
 router.get("/", blogController.blog_list_get);
 router.get("/randomblogs", blogController.blog_list_getrandomblogs);
+router.get("/popularblogs", blogController.blog_list_getpopularblogs);
 router.get("/ByUser/:id", blogController.blog_list_getByUserId);
 
 router.get("/:id", blogController.blog_get);
