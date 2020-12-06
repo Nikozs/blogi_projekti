@@ -134,6 +134,10 @@ body {
   display: none;
 }
 
+.topnav a#navmyblog {
+  display: none;
+}
+
 /* Style all font awesome icons */
 .fa-facebook {
   padding: 20px;
@@ -313,8 +317,6 @@ input[type="password"]:focus {
 }
 
 
-
-
 /* Full-width input fields */
 .logincontainer input[type="text"],
 input[type="password"] {
@@ -405,8 +407,6 @@ input[type="password"]:focus {
 
 
 
-
-
 #randomBlogitList {
   display: flex;
   /*border: 1px solid black;*/
@@ -419,5 +419,68 @@ input[type="password"]:focus {
 
 #randomBlogitList li {
   border: 1px solid black; 
+}
 
+#popularBlogitList {
+  display: flex;
+  /*border: 1px solid black;*/
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
+  word-break: break-all;
+}
+
+
+#popularBlogitList li {
+  border: 1px solid black; 
+}
+
+
+/*#popup {
+  visibility:hidden;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  position:absolute;
+  background:red;
+  border:2px solid #3c3c3c;
+  color:white;
+  z-index:100;
+  width: 500px;
+  height:300px;
+  padding:20px;
+  top: 50%;
+  left: 50%;
+  margin: -25px 0 0 -25px;
+}*/
+
+
+#newBlogPopup {
+	/* visibility: hidden; */
+	/* display: flex; */
+	/* justify-content: center; */
+	/* text-align: center; */
+	position: absolute;
+	background: red;
+	border: 2px solid #3c3c3c;
+	color: white;
+	z-index: 100;
+	/* width: 900px; */
+	height: 50%;
+	padding: 32px;
+	top: 25%;
+	/* margin: -25px 0 0 -25px; */
+	right: 50%;
+	width: 50%;
+	left: 30%;
+}
+
+.modaloverlay {
+  display: block;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  background-color: rgba(0, 0,0, 0.5);
+  top: 0;
 }
