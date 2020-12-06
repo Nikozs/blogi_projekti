@@ -14,6 +14,11 @@ const blog_list_getrandomblogs = async (req, res) => {
   res.json(blogs);
 };
 
+const blog_list_getpopularblogs = async (req, res) => {
+  const blogs = await blogModel.getPopularBlogs();
+  res.json(blogs);
+};
+
 const blog_list_getbysearch = async (req, res) => {
   const searchparam = req.params.searchparam;
   const blogs = await blogModel.getBlogBySearchParam(searchparam);
@@ -30,7 +35,7 @@ const blog_list_getByUserId = async (req,res) => {
   const UserId = req.params.id;
   const blogs = await blogModel.getBlogsByUserId(UserId);
   res.json(blogs);
-}
+};
 
 const blog_AddLike = async (req, res) => {
   const id = req.params.id;
@@ -51,8 +56,8 @@ const blog_create_post = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const {Title, Content} = req.body;
-  const params = [Title, Content];
+  const {Title, Content, UserID} = req.body;
+  const params = [Title, Content, UserID];
   const blogi = await blogModel.addBlog(params);
   res.json({message: 'upload ok'});
 };
@@ -64,7 +69,6 @@ const blog_update_put = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
   
-  // object destructuring
   const {Title, Content} = req.body;
   const params = [Title, Content];
   const blogi = await blogModel.updateBlog(params);
@@ -88,5 +92,6 @@ module.exports = {
   blog_create_post,
   blog_update_put,
   blog_delete,
-  blog_list_getByUserId
+  blog_list_getByUserId,
+  blog_list_getpopularblogs,
 };
