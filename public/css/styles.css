@@ -419,6 +419,12 @@ input[type="password"]:focus {
 
 #randomBlogitList li {
   border: 1px solid black; 
+  list-style-type: none;
+}
+
+#randomBlogitList img {
+  width: 100%;
+  height: 250px;
 }
 
 #popularBlogitList {
@@ -433,6 +439,7 @@ input[type="password"]:focus {
 
 #popularBlogitList li {
   border: 1px solid black; 
+  list-style-type: none;
 }
 
 
@@ -475,6 +482,48 @@ input[type="password"]:focus {
 	left: 30%;
 }
 
+
+#editBlogInfoPopup {
+	/* visibility: hidden; */
+	/* display: flex; */
+	/* justify-content: center; */
+	/* text-align: center; */
+	position: absolute;
+	background: red;
+	border: 2px solid #3c3c3c;
+	color: white;
+	z-index: 100;
+	/* width: 900px; */
+	height: 50%;
+	padding: 32px;
+	top: 25%;
+	/* margin: -25px 0 0 -25px; */
+	right: 50%;
+	width: 50%;
+	left: 30%;
+}
+
+
+#modifyBlogPopup {
+  	/* visibility: hidden; */
+	/* display: flex; */
+	/* justify-content: center; */
+	/* text-align: center; */
+	position: absolute;
+	background: red;
+	border: 2px solid #3c3c3c;
+	color: white;
+	z-index: 100;
+	/* width: 900px; */
+	height: 50%;
+	padding: 32px;
+	top: 25%;
+	/* margin: -25px 0 0 -25px; */
+	right: 50%;
+	width: 50%;
+	left: 30%;
+}
+
 .modaloverlay {
   display: block;
   position: fixed;
@@ -483,4 +532,10 @@ input[type="password"]:focus {
   z-index: 99;
   background-color: rgba(0, 0,0, 0.5);
   top: 0;
+}
+
+
+#editBlogInfo {
+margin-top: 5%;
+float: right;
 }
