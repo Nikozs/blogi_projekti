@@ -86,13 +86,11 @@ const getPopularBlogs = async () => {
 
 const addLike = async (id) => {
   try {
-    const [
-      rows,
-    ] = await promisePool.execute(
+    const [rows] = await promisePool.execute(
       "UPDATE post SET amountOfLikes=amountOfLikes+1 WHERE ID = ?",
       [id]
     );
-    //console.log("rows", rows);
+    console.log("rows", rows);
     return await getBlogById(id);
   } catch (e) {
     console.log("blogModel error:", e.message);
@@ -106,7 +104,7 @@ const removeLike = async (id) => {
       "UPDATE post SET amountOfLikes=amountOfLikes-1 WHERE ID = ? AND amountOfLikes>0",
       [id] 
     );
-    //console.log("rows", rows);
+    console.log("rows", rows);
     return await getBlogById(id);
   } catch (e) {
     console.log("blogModel error:", e.message);
