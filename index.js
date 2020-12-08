@@ -12,9 +12,15 @@ const port = 3000;
 var path = require("path");
 
 app.use(cors());
+
+
+app.use(bodyParser.urlencoded({ limit: '200mb', extended: false })); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.json({limit: '200mb'})); // for parsing application/json
+
 app.use(express.static("public"));
-app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: false })); // for parsing application/x-www-form-urlencoded
+app.use("/uploads",express.static('uploads'));
+app.use('/thumbnails', express.static('thumbnails'));
+
 
 app.use("/auth", authRoutes);
 app.use("/blogs", blogs);
@@ -24,8 +30,8 @@ app.post("/login", passport.authenticate("jwt"), function (req, res) {
   res.send(req.user);
 });
 
-app.get("/blog", function (req, res) {
+/*app.get("/blog", function (req, res) {
   res.sendFile(path.join(__dirname + "/public/blog.html"));
-});
+});*/
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));

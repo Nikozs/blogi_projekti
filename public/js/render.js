@@ -67,13 +67,24 @@ const renderUsersBlogs = async () => {
     }
 
     for (var b = 0; b < userinblogit.length; b++) {
+
+    if (userinblogit[b].Image == null) {
+      imgsrc = '';
+    } else {
+    var imgsrc = url + '/' + userinblogit[b].Image;
+    }
+      // img.alt = userinblogit[b].Title;
+      // img.classList.add('resp');
+
       var blogi = userinblogit[b];
       leftcolumn +=  
       `<div class="card">
       <h3> ` + blogi.Title + `</h3>
       <h5> Created at: ` + blogi.CreateAt + `</h5>
       <div class="blogbody">
-      <div class="fakeimg" style="height: 200px">Image</div>
+      <div class="fakeimg" style="height: 200px">
+      <img class="blogikuvat" src="`+imgsrc+`"/>
+      Image</div>
       <p class="content">Sisältö: ` + blogi.Content + `</p>
       </div>
       <p class="blogLikes">Likes: ` + blogi.amountOfLikes + ` <button>+</button><button>-</button></p>
@@ -168,31 +179,119 @@ function openNewBlogForm() {
   `<div id="newBlogPopupoverlay" class="modaloverlay">
   <div id="newBlogPopup">
   <h1>Add new blog</h1>
-  <form id="newBlogForm">
-  <label for="title"><b>Title: </b></label>
-    <input type="text" placeholder="Enter title" name="title" required>
-
-    <p>Add image:</p>
-
-    <label for="content"><b>Blog text: </b></label>
-    <textarea id="content" rows="10" cols="30" placeholder="Enter content" name="content" required></textarea><br>
-
+  <form id="newBlogForm" enctype="multipart/form-data">
+  <label for="title"><b>Title: </b></label><br>
+    <input type="text" placeholder="Enter title" name="Title" required><br>
+    <br>
+    <label for="image"><b>Image: </b></label><br>
+    <input type="file" name="Image" accept="image/*" placeholder="Choose file">
+   <br>
+    <br>
+    <label for="content"><b>Blog text: </b></label><br>
+    <textarea id="content" rows="10" cols="30" placeholder="Enter content" name="Content" required></textarea><br>
+    <br><br>
     <label for="category">Choose category:</label>
-    <select name="category" id="category">
+    <select name="Category" id="category">
       <option value="category1">category1</option>
       <option value="category2">category2</option>
       <option value="category3">category3</option>
       <option value="category4">category4</option>
     </select> 
-    <br>
-    <button type="submit">Add</button>
-    <button type="submit" onclick="closeForm()">Cancel</button>
+    <br><br>
+    <button type="submit" >Add</button>
+    <button type="button" onclick="closeForm()">Cancel</button>
+    <input type="hidden" name="UserID" value="`+sessionStorage.getItem("loggedUserId")+`">
   </form>
   </div>
   `;
+  popup.addEventListener("submit", onBlogSubmit);
   document.body.appendChild(popup);
   document.body.style = "overflow: hidden";
 };
+
+async function onBlogSubmit(evt){
+  evt.preventDefault();
+
+// var params = {};
+
+// var inputs = document
+// .getElementById("newBlogForm")
+// .getElementsByTagName("input");
+
+//   for (var i = 0; i < inputs.length; i++) {
+//     var curr = inputs[i];
+//     if (curr.getAttribute("type") === "text") {
+//       params[curr.getAttribute("name")] = curr.value;
+//     }
+//     if (curr.getAttribute("type") === "password") {
+//       params[curr.getAttribute("name")] = curr.value;
+//     }
+//   }
+
+//   var textareas = document
+// .getElementById("newBlogForm")
+// .getElementsByTagName("textarea");
+
+//   for (var i = 0; i < textareas.length; i++) {
+//     var curr = textareas[i];
+//       params[curr.getAttribute("name")] = curr.value;
+//   }
+  
+//   var images = document
+//   .getElementById("newBlogForm")
+//   .getElementsByTagName("input");
+  
+//     for (var i = 0; i < images.length; i++) {
+//       var curr = images[i];
+//       if (curr.getAttribute("type") === "file") {
+//         params[curr.getAttribute("name")] = curr.value;
+//       }
+//     }
+
+//     var selects = document
+//     .getElementById("newBlogForm")
+//     .getElementsByTagName("select");
+    
+//       for (var i = 0; i < selects.length; i++) {
+//         var curr = selects[i];
+  
+//           params[curr.getAttribute("name")] = curr.value;
+//       }
+
+//       params["UserID"]= sessionStorage.getItem("loggedUserId");
+
+//       var files = document
+//       .getElementById("newBlogForm")
+//       .getElementsByTagName("file")
+//       for (var i = 0; i < files.length; i++) {
+//         var curr = files[i];
+  
+//           params[curr.getAttribute("name")] = curr.value;
+//       }
+let newBlogForm = document.getElementById("newBlogForm") 
+let params = new FormData(newBlogForm);
+
+  closeForm();
+
+  const fetchOptions = {
+    method: "POST",
+    headers: {
+      'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+    },
+    // body: JSON.stringify(params),
+    body: params
+  };
+
+  const response = await fetch(url + "/blogs", fetchOptions);
+  const json = await response.json();
+  console.log("Add blog response", json);
+  if (!json.user) {
+    alert(json.message);
+  } else {
+    // 
+  }
+  //await addBlog(JSON.stringify(params));
+}
 
 
 function openModifyBlogForm() {
@@ -401,7 +500,7 @@ const addBlog = async (blogData) => {
       },
       body: blogData,
     };
-    return await doFetch(url + '/blogs', options);
+    return await fetch(url + '/blogs', options);
   } catch (e) {
     throw new Error(e.message);
   }

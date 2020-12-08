@@ -115,7 +115,7 @@ const removeLike = async (id) => {
 const addBlog = async (params) => {
   try {
     const [rows] = await promisePool.execute(
-        'INSERT INTO post (Title, CreateAt, Content, UserID) VALUES (?, NOW(), ?, ?)',
+        'INSERT INTO post (Title, CreateAt, Content, Image, UserID) VALUES (?, NOW(), ?, ?, ?)',
         params
     );
     //console.log('rows', rows);

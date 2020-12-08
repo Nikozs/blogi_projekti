@@ -1,6 +1,7 @@
 'use strict';
 const { validationResult } = require('express-validator');
 const blogModel = require('../models/blogModel');
+const {makeThumbnail} = require('../utils/resize');
 
 const blogs = blogModel.blogs;
 
@@ -56,8 +57,11 @@ const blog_create_post = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const {Title, Content, UserID} = req.body;
-  const params = [Title, Content, UserID];
+  const {Title, Content,  UserID} = req.body;
+  const {path} = req.file;
+  var Image=path;
+
+  const params = [Title, Content, Image, UserID];
   const blogi = await blogModel.addBlog(params);
   res.json({message: 'upload ok'});
 };
@@ -82,6 +86,20 @@ const blog_delete = async (req, res) => {
   res.json(blogi);
 };
 
+const make_thumbnail = async (req, res, next) => {
+  blog_create_post(req, res, next)
+  // kutsu makeThumbnail
+  // try {
+  //   const kuvake = await makeThumbnail(req.file.path, req.file.filename);
+  //   console.log('kuvake', kuvake);
+  //   if (kuvake) {
+  //     next();
+  //   }
+  // } catch (e) {
+  //   res.status(400).json({errors: e.message});
+  // }
+};
+
 module.exports = {
   blog_list_get,
   blog_get,
@@ -94,4 +112,5 @@ module.exports = {
   blog_delete,
   blog_list_getByUserId,
   blog_list_getpopularblogs,
+  make_thumbnail
 };
