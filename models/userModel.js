@@ -51,11 +51,26 @@ const getAllUsers = async () => {
     }
   };
 
+  const updateUser = async (params) => {
+    try {
+      const [rows] = await promisePool.execute(
+          'UPDATE user SET BlogName = ?, Description = ?, ProfileImage = ? WHERE ID = ?',
+          params
+      );
+      console.log('rows', rows);
+      return rows;
+    } catch (e) {
+      console.log('blogModel error', e.message);
+      return {error: 'Error in updateBlog'};
+    }
+  }
+
 
 
   module.exports = {
     getAllUsers,
     getUserById,
     addUser,
+    updateUser,
     getUserLogin
   };

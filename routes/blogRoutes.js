@@ -35,11 +35,19 @@ router.get("/search/:searchparam", blogController.blog_list_getbysearch);
 router.get("/addlike/:id", blogController.blog_AddLike);
 router.get("/removelike/:id", blogController.blog_RemoveLike);
 
-router.post("/", upload.single('Image'), injectFile, blogController.make_thumbnail, [
+router.post("/", upload.single('Image'), injectFile, [
   body('Title', 'vaadittu kenttä').isLength({min: 1}),
+  body('Content', 'vaadittu kenttä').isLength({min: 1}),
   body('mimetype', 'ei ole kuva').contains('image'),
 ], blogController.blog_create_post);
 
-//router.post("/",blogController.blog_create_post);
+router.put('/', upload.single('Image'), injectFile, [
+  body('Title', 'vaadittu kenttä').isLength({min: 1}),
+  body('Content', 'vaadittu kenttä').isLength({min: 1}),
+  body('mimetype', 'ei ole kuva').contains('image'),
+], blogController.blog_update_put);
+
+router.delete('/:id', blogController.blog_delete);
+
 
 module.exports = router;

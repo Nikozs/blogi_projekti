@@ -30,7 +30,7 @@ const getBlogById = async (id) => {
 const getBlogsByUserId = async (id) => {
   try {
     const [rows] = await promisePool.execute(
-      "SELECT * FROM post WHERE UserID = ?",
+      "SELECT * FROM post WHERE UserID = ? ORDER BY ID DESC",
       [id]
     );
     //console.log("rows", rows);
@@ -129,10 +129,10 @@ const addBlog = async (params) => {
 const updateBlog = async (params) => {
   try {
     const [rows] = await promisePool.execute(
-        'UPDATE post SET Title = ?, UpdateAt = NOW(), Content = ? WHERE ID = ?',
+        'UPDATE post SET Title = ?, UpdateAt = NOW(),  Content = ?, Image = ? WHERE ID = ?',
         params
     );
-    //console.log('rows', rows);
+    console.log('rows', rows);
     return rows;
   } catch (e) {
     console.log('blogModel error', e.message);

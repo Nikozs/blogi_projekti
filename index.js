@@ -19,8 +19,6 @@ app.use(bodyParser.json({limit: '200mb'})); // for parsing application/json
 
 app.use(express.static("public"));
 app.use("/uploads",express.static('uploads'));
-app.use('/thumbnails', express.static('thumbnails'));
-
 
 app.use("/auth", authRoutes);
 app.use("/blogs", blogs);
@@ -29,9 +27,5 @@ app.use("/user", passport.authenticate("jwt", { session: false }), userit);
 app.post("/login", passport.authenticate("jwt"), function (req, res) {
   res.send(req.user);
 });
-
-/*app.get("/blog", function (req, res) {
-  res.sendFile(path.join(__dirname + "/public/blog.html"));
-});*/
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));

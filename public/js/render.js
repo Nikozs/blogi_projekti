@@ -19,7 +19,7 @@ const queryString = window.location.search;
 const mainContainer = document.querySelector(".mainContainer");
 
 
-const renderSelectedPost = async () => {
+/*const renderSelectedPost = async () => {
   console.log(queryString);
 
   const urlParams = new URLSearchParams(queryString);
@@ -30,6 +30,8 @@ const renderSelectedPost = async () => {
     getBlogById(blogid);
     
     // Lets print in innerhtml here...
+    searchResults.innerHTML += `<p>testip</p>`
+
     
   }
   if (sessionStorage.getItem("blogid") !== undefined) {
@@ -38,8 +40,9 @@ const renderSelectedPost = async () => {
     getBlogById(blogid);
 
     // Lets print in innerhtml here...
+    searchResults.innerHTML += `<p>testip</p>`
   }
-};
+};*/
 
 
 const renderUsersBlogs = async () => {
@@ -52,13 +55,17 @@ const renderUsersBlogs = async () => {
     console.log(userid);
     var userinblogit = await getBlogsByUserId(userid);
 
-   
+    //KORJAA: näytä blogit kun käyttäjä ei ole kirjautuneena
+    
+    var u = await getUserById(userid);
+    var useri=u[0];
+
       mainContainer.innerHTML = `<div class="header">`
       const header = document.querySelector(".header");
          if (sessionStorage.getItem("loggedUserId") !== undefined && userid == sessionStorage.getItem("loggedUserId")) {
           header.innerHTML += `<button id="editBlogInfo" onclick="editBlogInfoForm()">Edit</button>`
       }
-      header.innerHTML +=`<h2>Blog Name</h2></div></div>`
+      header.innerHTML +=`<h2>`+useri.BlogName+`</h2></div></div>`
 
     var leftcolumn = `<div class="leftcolumn">`
 
@@ -73,8 +80,6 @@ const renderUsersBlogs = async () => {
     } else {
     var imgsrc = url + '/' + userinblogit[b].Image;
     }
-      // img.alt = userinblogit[b].Title;
-      // img.classList.add('resp');
 
       var blogi = userinblogit[b];
       leftcolumn +=  
@@ -84,14 +89,14 @@ const renderUsersBlogs = async () => {
       <div class="blogbody">
       <div class="fakeimg" style="height: 200px">
       <img class="blogikuvat" src="`+imgsrc+`"/>
-      Image</div>
-      <p class="content">Sisältö: ` + blogi.Content + `</p>
+      </div><br>
+      <span class="content">` + blogi.Content + `</span>
       </div>
       <p class="blogLikes">Likes: ` + blogi.amountOfLikes + ` <button>+</button><button>-</button></p>
       <p class="blogCategory">Category: <button>dfg</button></p>`
 
       if (sessionStorage.getItem("loggedUserId") !== undefined && blogi.UserID == sessionStorage.getItem("loggedUserId")) {
-        leftcolumn+='<button onclick="openModifyBlogForm()">Muokkaa</button>';
+        leftcolumn+='<button style="width: 50%" onclick="openModifyBlogForm('+blogi.ID+')">Muokkaa</button><button style="width: 50%" onclick="deleteBlog('+blogi.ID+')">Poista</button>';
       }
 
       leftcolumn+=`</div>`
@@ -100,20 +105,20 @@ const renderUsersBlogs = async () => {
     leftcolumn+= `</div>`
      mainContainer.innerHTML+=leftcolumn;
 
+
+
+     if (useri.ProfileImage == null) {
+      profimgsrc = '';
+    } else {
+      var profimgsrc = url + '/' + useri.ProfileImage;
+    }
+
      mainContainer.innerHTML+=  
      `<div class="rightcolumn">
         <div class="card">
           <h2>About Me</h2>
-          <div class="fakeimg" style="height: 100px">Image</div>
-          <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
-        </div>
-        <div class="card">
-          <h3>Popular Post</h3>
-          <div class="fakeimg">Image</div>
-          <br />
-          <div class="fakeimg">Image</div>
-          <br />
-          <div class="fakeimg">Image</div>
+          <img class="profilepicture" style="height: 100px" src="`+profimgsrc+`"/>
+          <p>` + useri.Description + `</p>
         </div>
       </div>
     </div>`
@@ -146,31 +151,67 @@ const renderUsersBlogs = async () => {
   }
 };
 
+async function editBlogInfoForm() {
+  var userid = sessionStorage.getItem("loggedUserId")
+  var u= await getUserById(userid);
+  var useri=u[0];
 
-function editBlogInfoForm() {
   var popup = document.createElement("div");
   popup.setAttribute("id", "popup");
   popup.innerHTML = 
   `<div id="editBlogInfoPopupoverlay" class="modaloverlay">
   <div id="editBlogInfoPopup">
   <h1>Edit your profile:</h1>
-  <form id="newBlogForm">
+  <form id="editBlogInfoForm">
   <label for="BlogName"><b>Blog Name</b></label>
-    <input type="text" placeholder="Enter Blog Name" name="BlogName" required>
+  <br>
+    <input type="text" placeholder="Enter Blog Name" name="BlogName" value="`+ useri.BlogName +`" required>
+    <br><br>
+     <br>
+    <label for="image"><b>Profile image: </b></label><br>
+    <input type="file" name="ProfileImage" accept="image/*" placeholder="Choose file" required>
+    <br><br>
+    <label for="AboutMe"><b>Description:</b></label>
     <br>
-    <label for="AboutMe"><b>About Me:</b></label>
-    <textarea id="description" rows="10" cols="30" placeholder="Enter description" name="content" required></textarea><br>
-    
-    <p>Add profile image:</p>
+    <textarea id="description" rows="10" cols="30" placeholder="Enter description" name="Description" required>`+ useri.Description +`</textarea><br>
+    <input type="hidden" name="ID" value="`+ userid +`">
 
     <button type="submit">Confirm</button>
     <button type="submit" onclick="closeForm()">Cancel</button>
   </form>
   </div>
   `;
+  popup.addEventListener("submit", onBlogInfoModify);
   document.body.appendChild(popup);
   document.body.style = "overflow: hidden";
 };
+
+
+async function onBlogInfoModify(evt){
+  evt.preventDefault();
+
+  let editBlogInfoForm = document.getElementById("editBlogInfoForm") 
+  let params = new FormData(editBlogInfoForm);
+
+  closeForm();
+
+  const fetchOptions = {
+    method: "PUT",
+    headers: {
+      'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+    },
+    body: params
+  };
+
+  const response = await fetch(url + "/user", fetchOptions);
+  const json = await response.json();
+  console.log("Modify blog response", json);
+  if (!json.user) {
+    alert(json.message);
+  } else {
+  }
+  renderUsersBlogs();
+}
 
 function openNewBlogForm() {
   var popup = document.createElement("div");
@@ -212,62 +253,6 @@ function openNewBlogForm() {
 async function onBlogSubmit(evt){
   evt.preventDefault();
 
-// var params = {};
-
-// var inputs = document
-// .getElementById("newBlogForm")
-// .getElementsByTagName("input");
-
-//   for (var i = 0; i < inputs.length; i++) {
-//     var curr = inputs[i];
-//     if (curr.getAttribute("type") === "text") {
-//       params[curr.getAttribute("name")] = curr.value;
-//     }
-//     if (curr.getAttribute("type") === "password") {
-//       params[curr.getAttribute("name")] = curr.value;
-//     }
-//   }
-
-//   var textareas = document
-// .getElementById("newBlogForm")
-// .getElementsByTagName("textarea");
-
-//   for (var i = 0; i < textareas.length; i++) {
-//     var curr = textareas[i];
-//       params[curr.getAttribute("name")] = curr.value;
-//   }
-  
-//   var images = document
-//   .getElementById("newBlogForm")
-//   .getElementsByTagName("input");
-  
-//     for (var i = 0; i < images.length; i++) {
-//       var curr = images[i];
-//       if (curr.getAttribute("type") === "file") {
-//         params[curr.getAttribute("name")] = curr.value;
-//       }
-//     }
-
-//     var selects = document
-//     .getElementById("newBlogForm")
-//     .getElementsByTagName("select");
-    
-//       for (var i = 0; i < selects.length; i++) {
-//         var curr = selects[i];
-  
-//           params[curr.getAttribute("name")] = curr.value;
-//       }
-
-//       params["UserID"]= sessionStorage.getItem("loggedUserId");
-
-//       var files = document
-//       .getElementById("newBlogForm")
-//       .getElementsByTagName("file")
-//       for (var i = 0; i < files.length; i++) {
-//         var curr = files[i];
-  
-//           params[curr.getAttribute("name")] = curr.value;
-//       }
 let newBlogForm = document.getElementById("newBlogForm") 
 let params = new FormData(newBlogForm);
 
@@ -290,26 +275,56 @@ let params = new FormData(newBlogForm);
   } else {
     // 
   }
+  renderUsersBlogs();
   //await addBlog(JSON.stringify(params));
 }
 
 
-function openModifyBlogForm() {
+
+async function onBlogModify(evt){
+  evt.preventDefault();
+
+  let modifyBlogForm = document.getElementById("modifyBlogForm") 
+  let params = new FormData(modifyBlogForm);
+
+  closeForm();
+
+  const fetchOptions = {
+    method: "PUT",
+    headers: {
+      'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+    },
+    body: params
+  };
+
+  const response = await fetch(url + "/blogs", fetchOptions);
+  const json = await response.json();
+  console.log("Modify blog response", json);
+  if (!json.user) {
+    alert(json.message);
+  } else {
+  }
+  renderUsersBlogs();
+}
+
+
+function openModifyBlogForm(blogid) {
   var popup = document.createElement("div");
   popup.setAttribute("id", "popup");
   popup.innerHTML = 
   `<div id="modifyBlogPopupoverlay" class="modaloverlay">
   <div id="modifyBlogPopup">
   <h1>Edit blog</h1>
-  <form id="modifyBlogForm">
-  <label for="title"><b>New title: </b></label>
-    <input type="text" placeholder="Enter title" name="title" required>
-
-    <p>Change image:</p>
-
-    <label for="content"><b>Edit Blog text: </b></label>
-    <textarea id="content" rows="10" cols="30" placeholder="Enter content" name="content" required></textarea><br>
-
+  <form id="modifyBlogForm" enctype="multipart/form-data">
+  <label for="title"><b>New title: </b></label><br>
+    <input type="text" placeholder="Enter title" name="Title" required>
+    <br><br>
+    <label for="image"><b>Image: </b></label><br>
+    <input type="file" name="Image" accept="image/*" placeholder="Choose file" required>
+    <br><br>
+    <label for="content"><b>Edit Blog text: </b></label><br>
+    <textarea id="content" rows="10" cols="30" placeholder="Enter content" name="Content" required></textarea><br>
+    <br>
     <label for="category">Change category:</label>
     <select name="category" id="category">
       <option value="category1">category1</option>
@@ -317,12 +332,44 @@ function openModifyBlogForm() {
       <option value="category3">category3</option>
       <option value="category4">category4</option>
     </select> 
-    <br>
-    <button type="submit">Add</button>
-    <button type="submit" onclick="closeForm()">Cancel</button>
+    <br><br>
+    <button type="submit">Confirm</button>
+    <button type="button" onclick="closeForm()">Cancel</button>
+    <input type="hidden" name="ID" value="`+ blogid +`">
   </form>
   </div>
   `;
+  popup.addEventListener("submit", onBlogModify);
+  document.body.appendChild(popup);
+  document.body.style = "overflow: hidden";
+};
+
+
+async function openClickedBlog(blogid) {
+  var blogit = await getBlogById(blogid);
+  var blogi=blogit[0];
+
+  var popup = document.createElement("div");
+  popup.setAttribute("id", "popup");
+  popup.innerHTML = 
+  `<div id="ClickedBlogPopupoverlay" class="modaloverlay">
+  <div id="ClickedBlogPopup">
+  <div class="popupcard">
+  <h3> ` + blogi.Title + `</h3>
+  <h5> Created at: ` + blogi.CreateAt + `</h5>
+  <div class="blogbody">
+  <div class="fakeimg" style="height: 200px">
+  <img class="blogikuvat" src="`+blogi.Image+`"/>
+  </div><br>
+  <span class="content">` + blogi.Content + `</span>
+  </div>
+  <p class="blogLikes">Likes: ` + blogi.amountOfLikes + ` <button>+</button><button>-</button></p>
+  <p class="blogCategory">Category: <button>dfg</button></p>
+  <button onclick="closeForm()">Close</button>
+  </div>
+  `;
+  //popup.addEventListener("submit", onBlogModify);
+
   document.body.appendChild(popup);
   document.body.style = "overflow: hidden";
 };
@@ -345,7 +392,7 @@ async function renderRandomBlogs() {
     <h3> ` + blogi.Title + `</h3>
     <p>Likes: ` + blogi.amountOfLikes + `</p>
     <p>User: ` + blogi.UserID + `</p>
-    <button>View</button>
+    <button onclick="openClickedBlog(`+ blogi.ID +`)">View</button>
     </li>`;
   }
 }
@@ -362,7 +409,7 @@ async function renderPopularBlogs() {
       <h3> ` + blogi.Title + `</h3>
       <p>Likes: ` + blogi.amountOfLikes + `</p>
       <p>User: ` + blogi.UserID + `</p>
-      <button onclick="renderSelectedPost()">View</button>
+      <button onclick="openClickedBlog(`+ blogi.ID +`)">View</button>
       </li>`;
   }
 }
@@ -375,13 +422,17 @@ async function renderSearchResults(jep) {
   if (blogit.length > 0) {
     for (var b = 0; b < blogit.length; b++) {
       var blogi = blogit[b];
-      console.log("blogi", blogi);
-      searchResults.innerHTML += "<h3>" + blogi.Title + "</h3>";
-      searchResults.innerHTML += "<p>" + blogi.Content + "</p>";
-      searchResults.innerHTML += "<button>Go</button>";
+
+      //console.log("blogi", blogi);
+
+         searchResults.innerHTML += `<li>
+    <h3> ` + blogi.Title + `</h3>
+    <p> ` + blogi.Content + `</p>
+    <button onclick="openClickedBlog(`+ blogi.ID +`)">View</button>
+    </li>`;
     }
   } else {
-    searchResults.innerHTML += "<p>No results</p>";
+    searchResults.innerHTML += "<p id='noResults'>No results</p>";
   }
 
   searchResults.style.display = "block";
@@ -437,6 +488,24 @@ const getBlogsByUserId = async (ShowUserid) => {
   }
 };
 
+const getUserById = async (userid) => {
+  try {
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("token"),
+      },
+    };
+    const response = await fetch(url + "/user/" + userid, options);
+    const users = await response.json();
+
+    return users;
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+
 const getBlogs = async () => {
   var searchText = search.value;
 
@@ -491,38 +560,11 @@ const getUsers = async () => {
 };
 
 
-const addBlog = async (blogData) => {
-  try {
-    const options = {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
-      },
-      body: blogData,
-    };
-    return await fetch(url + '/blogs', options);
-  } catch (e) {
-    throw new Error(e.message);
-  }
-};
-
-const modifyBlog = async (data) => {
-  try {
-    const options = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
-      },
-      body: JSON.stringify(data),
-    };
-    return await fetch(url + '/blogs', options);
-  } catch (e) {
-    throw new Error(e.message);
-  }
-};
-
 const deleteBlog = async (id) => {
+  
+  var r = confirm("Oletko varma?");
+  if(r==true){
+
   const options = {
     method: 'DELETE',
     headers: {
@@ -530,11 +572,13 @@ const deleteBlog = async (id) => {
     },
   };
   try {
-    return await fetch(url + '/blogs/' + id, options);
+    await fetch(url + '/blogs/' + id, options);
   } catch (e) {
     // console.log(e.message());
     throw new Error(e.message);
   }
+  renderUsersBlogs();
+}
 };
 
 
@@ -652,6 +696,7 @@ loginForm.addEventListener("submit", async (evt) => {
   const response = await fetch(url + "/auth/login", fetchOptions);
   const json = await response.json();
   console.log("login response", json);
+
   if (!json.user) {
     alert(json.message);
   } else {
