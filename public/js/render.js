@@ -77,7 +77,7 @@ const renderUsersBlogs = async () => {
       <p class="blogCategory">Category: <button>dfg</button></p>`
 
       if (sessionStorage.getItem("loggedUserId") !== undefined && blogi.UserID == sessionStorage.getItem("loggedUserId")) {
-        leftcolumn+='<button id="editBlog" onclick="openModifyBlogForm('+blogi.ID+')">Muokkaa</button><button id="deleteBlog" onclick="deleteBlog('+blogi.ID+')">Poista</button>';
+        leftcolumn+='<button id="editBlog" onclick="openModifyBlogForm('+blogi.ID+')">Edit</button><button id="deleteBlog" onclick="deleteBlog('+blogi.ID+')">Delete</button>';
       }
 
       leftcolumn+=`</div>`

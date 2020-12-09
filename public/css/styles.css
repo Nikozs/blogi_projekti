@@ -38,6 +38,7 @@ body {
   float: left;
   width: 25%;
   padding-left: 20px;
+  margin-top: 45px;
 }
 
 /* Fake image */
@@ -95,6 +96,7 @@ body {
   position: fixed;
   top: 0px;
   width: 100%;
+  z-index: 2;
 }
 
 .topnav a {
@@ -596,13 +598,17 @@ float: right;
 
 button#addNewPost {
 	width: 50%;
-	margin-top: 5px;
+	margin-top: 20px;
 	padding: 4px;
 	border-radius: 5px;
 	margin-left: 25%;
 	display: flex;
 	justify-content: center;
-	align-items: center;
+  align-items: center;
+  background: linear-gradient(5deg, #000, #6c6c6c);
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
 
@@ -631,11 +637,11 @@ textarea {
   border-radius: 5px;
   cursor: pointer;
 	width: 33%;
-  opacity: 0.9;
+  margin-bottom: 0%;
 }
 
 #editBlog:hover {
-  opacity: 1;
+  opacity: 0.9;
 }
 
 
@@ -648,11 +654,11 @@ textarea {
 	border-radius: 5px;
   cursor: pointer;
   width: 33%;
-	opacity: 0.9;
+	margin-bottom: 0%;
 	/* padding-left: 24px; */
 }
 
 #deleteBlog:hover {
-  opacity: 1;
+  opacity: 0.9;
 }
 
