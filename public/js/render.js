@@ -388,7 +388,7 @@ async function renderRandomBlogs() {
 
     randomBlogsit.innerHTML +=
     `<li>
-    <img></img>
+    <img src="`+blogi.Image+`"></img>
     <h3> ` + blogi.Title + `</h3>
     <p>Likes: ` + blogi.amountOfLikes + `</p>
     <p>User: ` + blogi.UserID + `</p>
@@ -405,7 +405,7 @@ async function renderPopularBlogs() {
 
     popularBlogsit.innerHTML +=
       `<li>
-      <img style="width: 100%; height: 250px"></img>
+      <img src="`+blogi.Image+`" style="width: 100%; height: 250px"></img>
       <h3> ` + blogi.Title + `</h3>
       <p>Likes: ` + blogi.amountOfLikes + `</p>
       <p>User: ` + blogi.UserID + `</p>
