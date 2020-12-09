@@ -202,7 +202,7 @@ function openNewBlogForm() {
   <h1>Add new blog</h1>
   <form id="newBlogForm" enctype="multipart/form-data">
   <label for="title"><b>Title: </b></label><br>
-    <input type="text" placeholder="Enter title" name="Title" required><br>
+    <input type="text" placeholder="Enter title" name="Title" title="Max 100 letters" pattern=".{1,100}" required><br>
     <br>
     <label for="image"><b>Image: </b></label><br>
     <input type="file" name="Image" accept="image/*" placeholder="Choose file" required>
@@ -297,7 +297,7 @@ function openModifyBlogForm(blogid) {
   <h1>Edit blog</h1>
   <form id="modifyBlogForm" enctype="multipart/form-data">
   <label for="title"><b>New title: </b></label><br>
-    <input type="text" placeholder="Enter title" name="Title" required>
+    <input type="text" placeholder="Enter title" name="Title" title="Max 100 letters" pattern=".{1,100}" required>
     <br><br>
     <label for="image"><b>Image: </b></label><br>
     <input type="file" name="Image" accept="image/*" placeholder="Choose file" required>
@@ -336,7 +336,6 @@ async function openClickedBlog(blogid) {
   <div id="ClickedBlogPopup">
   <div class="popupcard">
   <h3> ` + blogi.Title + `</h3>
-  <h5> Created at: ` + blogi.CreateAt + `</h5>
   <div class="blogbody">
   <div class="fakeimg" style="height: 200px">
   <img class="blogikuvat" src="`+blogi.Image+`"/>
