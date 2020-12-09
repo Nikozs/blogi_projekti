@@ -215,19 +215,15 @@ body {
     width: 100%;
     padding: 0;
   }
+
+  .rightcolumn .card {
+    margin-bottom: 10px;
+  }
 }
 
 /*
    Styles for sign up
 */
-/*#signupForm {
-  display: none;
-  margin-top: 130px;
-  margin-bottom: 25%;
-  margin-left: 25%;
-  margin-right: 25%;
-  width: 50%
-}*/
 
 #signupForm {
 	display: none;
@@ -314,6 +310,7 @@ input[type="password"]:focus {
 /*
   Styles for login
 */
+
 /* Add padding to containers */
 #loginForm {
   display: none;
@@ -331,7 +328,6 @@ input[type="password"]:focus {
   border-radius: 60px;
   background-color: #e3e3e3;
 }
-
 
 /* Full-width input fields */
 .logincontainer input[type="text"],
@@ -359,7 +355,6 @@ input[type="password"]:focus {
 
 /* Set a style for the submit/register button */
 .loginbtn {
-  /*background-color: #4caf50;*/
   background: linear-gradient(45deg, #258291, #13f721);
   color: white;
   padding: 16px 20px;
@@ -588,7 +583,6 @@ float: right;
 }
 
 
-
 .popupcard {
   background-color: white;
   padding: 20px;
@@ -626,4 +620,8 @@ textarea {
 	height: 114px;
 	max-height: 100px;
 	width: 720px;
+}
+
+.leftcolumn .card:last-child {
+  margin-bottom: 10px;
 }

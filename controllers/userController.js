@@ -38,5 +38,5 @@ const user_extraInfo_update_put = async (req, res) => {
 module.exports = {
   user_list_get,
   user_get,
-  user_extraInfo_update_put
+  user_extraInfo_update_put,
 };

@@ -23,6 +23,8 @@ app.use("/uploads",express.static('uploads'));
 app.use("/auth", authRoutes);
 app.use("/blogs", blogs);
 app.use("/user", passport.authenticate("jwt", { session: false }), userit);
+//app.use("/blogs/bloginfo", blogs);
+
 
 app.post("/login", passport.authenticate("jwt"), function (req, res) {
   res.send(req.user);

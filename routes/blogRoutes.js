@@ -47,6 +47,8 @@ router.put('/', upload.single('Image'), injectFile, [
   body('mimetype', 'ei ole kuva').contains('image'),
 ], blogController.blog_update_put);
 
+router.get('/bloginfo/:ID', blogController.user_get_bloginfo);
+
 router.delete('/:id', blogController.blog_delete);
 
 

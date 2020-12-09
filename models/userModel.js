@@ -24,6 +24,7 @@ const getAllUsers = async () => {
     }
   }
 
+
   const addUser = async (params) => {
     try {
       console.log(params)
@@ -65,12 +66,10 @@ const getAllUsers = async () => {
     }
   }
 
-
-
   module.exports = {
     getAllUsers,
     getUserById,
     addUser,
     updateUser,
-    getUserLogin
+    getUserLogin,
   };

@@ -76,7 +76,6 @@ const getPopularBlogs = async () => {
     const [rows] = await promisePool.execute(
       "SELECT * FROM post ORDER BY amountOfLikes DESC LIMIT 10"
     );
-    //console.log("rows", rows);
     return rows;
   } catch (e) {
     console.log("blogModel error:", e.message);
@@ -118,7 +117,6 @@ const addBlog = async (params) => {
         'INSERT INTO post (Title, CreateAt, Content, Image, UserID) VALUES (?, NOW(), ?, ?, ?)',
         params
     );
-    //console.log('rows', rows);
     return rows;
   } catch (e) {
     console.log('blogModel error', e.message);
@@ -144,11 +142,21 @@ const deleteBlog = async (id) => {
   try {
     const [rows] = await promisePool.execute('DELETE FROM post WHERE ID = ?',
         [id]);
-    //console.log('rows', rows);
     return rows;
   } catch (e) {
     console.log('blogModel error', e.message);
     return {error: 'Error in deleteBlog'};
+  }
+}
+
+const getBlogInfoFromUserById = async (ID) => {
+  try {
+    const [rows] = await promisePool.execute('SELECT Description, ProfileImage, BlogName FROM user WHERE ID = ?', [ID]);
+    console.log('rows', rows);
+    return rows;
+  } catch (e) {
+    console.log('userModel error:', e.message);
+    return {error: 'Error'};
   }
 }
 
@@ -163,5 +171,6 @@ module.exports = {
   updateBlog,
   deleteBlog,
   getBlogsByUserId,
-  getPopularBlogs
+  getPopularBlogs,
+  getBlogInfoFromUserById
 };

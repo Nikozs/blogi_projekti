@@ -88,6 +88,12 @@ const blog_delete = async (req, res) => {
   res.json(blogi);
 };
 
+const user_get_bloginfo = async (req, res) => {
+  const id = req.params.ID;
+  const useri = await blogModel.getBlogInfoFromUserById(id);
+  res.json(useri);
+};
+
 
 module.exports = {
   blog_list_get,
@@ -101,4 +107,5 @@ module.exports = {
   blog_delete,
   blog_list_getByUserId,
   blog_list_getpopularblogs,
+  user_get_bloginfo
 };

@@ -19,32 +19,9 @@ const queryString = window.location.search;
 const mainContainer = document.querySelector(".mainContainer");
 
 
-/*const renderSelectedPost = async () => {
-  console.log(queryString);
-
-  const urlParams = new URLSearchParams(queryString);
-
-  if (URLSearchParams.has("blogid")) {
-    const blogid = urlParams.get("blogid");
-    console.log(blogid);
-    getBlogById(blogid);
-    
-    // Lets print in innerhtml here...
-    searchResults.innerHTML += `<p>testip</p>`
-
-    
-  }
-  if (sessionStorage.getItem("blogid") !== undefined) {
-    const blogid = urlParams.get("blogid");
-    console.log(blogid);
-    getBlogById(blogid);
-
-    // Lets print in innerhtml here...
-    searchResults.innerHTML += `<p>testip</p>`
-  }
-};*/
-
-
+/*
+  Visual
+*/
 const renderUsersBlogs = async () => {
   const queryString = window.location.search;
   console.log(queryString);
@@ -55,9 +32,7 @@ const renderUsersBlogs = async () => {
     console.log(userid);
     var userinblogit = await getBlogsByUserId(userid);
 
-    //KORJAA: näytä blogit kun käyttäjä ei ole kirjautuneena
-
-    var u = await getUserById(userid);
+    var u = await getUserByIdForBlog(userid);
     var useri=u[0];
 
       mainContainer.innerHTML = `<div class="header">`
@@ -65,7 +40,7 @@ const renderUsersBlogs = async () => {
          if (sessionStorage.getItem("loggedUserId") !== undefined && userid == sessionStorage.getItem("loggedUserId")) {
           header.innerHTML += `<button id="editBlogInfo" onclick="editBlogInfoForm()">Edit</button>`
       }
-      header.innerHTML +=`<h2>`+useri.BlogName+`</h2></div></div>`
+      header.innerHTML +=`<h2>`+ isnull(useri.BlogName, 'No name') +`</h2></div></div>`
 
     var leftcolumn = `<div class="leftcolumn">`
 
@@ -85,8 +60,14 @@ const renderUsersBlogs = async () => {
       leftcolumn +=  
       `<div class="card">
       <h3> ` + blogi.Title + `</h3>
-      <h5> Created at: ` + blogi.CreateAt + `</h5>
-      <div class="blogbody">
+      <h5> Created at: ` + new Date(blogi.CreateAt).toLocaleDateString('en-GB', { hour: '2-digit', minute: '2-digit'}) + `</h5>`
+      
+      if(blogi.UpdateAt !== null) {
+        leftcolumn+='<h5> Update at: ' + new Date(blogi.UpdateAt).toLocaleDateString('en-GB', { hour: '2-digit', minute: '2-digit'}) + '</h5>';
+      }
+
+      leftcolumn+=
+      `<div class="blogbody">
       <div class="fakeimg" style="height: 200px">
       <img class="blogikuvat" src="`+imgsrc+`"/>
       </div><br>
@@ -106,7 +87,6 @@ const renderUsersBlogs = async () => {
      mainContainer.innerHTML+=leftcolumn;
 
 
-
      if (useri.ProfileImage == null) {
       profimgsrc = '';
     } else {
@@ -117,8 +97,8 @@ const renderUsersBlogs = async () => {
      `<div class="rightcolumn">
         <div class="card">
           <h2>About Me</h2>
-          <img class="profilepicture" src="`+profimgsrc+`"/>
-          <p>` + useri.Description + `</p>
+          <img class="profilepicture" src="`+ profimgsrc +`"/>
+          <p>` + isnull(useri.Description,'No description') + `</p>
         </div>
       </div>
     </div>`
@@ -225,8 +205,8 @@ function openNewBlogForm() {
     <input type="text" placeholder="Enter title" name="Title" required><br>
     <br>
     <label for="image"><b>Image: </b></label><br>
-    <input type="file" name="Image" accept="image/*" placeholder="Choose file">
-   <br>
+    <input type="file" name="Image" accept="image/*" placeholder="Choose file" required>
+    <br>
     <br>
     <label for="content"><b>Blog text: </b></label><br>
     <textarea id="content" rows="10" cols="30" placeholder="Enter content" name="Content" required></textarea><br>
@@ -366,9 +346,9 @@ async function openClickedBlog(blogid) {
   <p class="blogLikes">Likes: ` + blogi.amountOfLikes + ` <button>+</button><button>-</button></p>
   <p class="blogCategory">Category: <button>dfg</button></p>
   <button onclick="closeForm()">Close</button>
+  <a href="` + '?ShowUserid=' + blogi.UserID + `">Go to users blog</a> 
   </div>
   `;
-  //popup.addEventListener("submit", onBlogModify);
 
   document.body.appendChild(popup);
   document.body.style = "overflow: hidden";
@@ -423,9 +403,7 @@ async function renderSearchResults(jep) {
     for (var b = 0; b < blogit.length; b++) {
       var blogi = blogit[b];
 
-      //console.log("blogi", blogi);
-
-         searchResults.innerHTML += `<li>
+    searchResults.innerHTML += `<li>
     <h3> ` + blogi.Title + `</h3>
     <p> ` + blogi.Content + `</p>
     <button onclick="openClickedBlog(`+ blogi.ID +`)">View</button>
@@ -448,16 +426,13 @@ async function onPageLoading() {
   if (urlParams.has("ShowUserid")) {
     // Lets render current users blog
     renderUsersBlogs();
-  } else if (urlParams.has("blogid")) {
-    // lets render only this one blog
-    renderSelectBlog();
   } else {
     // Lets render popular/randomblogs
     renderPopularBlogs();
     renderRandomBlogs();
   }
 }
-
+/* ---------------------------------------------- */
 
 
 
@@ -497,6 +472,23 @@ const getUserById = async (userid) => {
       },
     };
     const response = await fetch(url + "/user/" + userid, options);
+    const users = await response.json();
+
+    return users;
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+const getUserByIdForBlog = async (userid) => {
+  try {
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("token"),
+      },
+    };
+    const response = await fetch(url + "/blogs/bloginfo/" + userid, options);
     const users = await response.json();
 
     return users;
@@ -553,7 +545,7 @@ const getUsers = async () => {
     };
     const response = await fetch(url + "/user", options);
     const users = await response.json();
-    createUserOptions(users);
+    //createUserOptions(users);
   } catch (e) {
     console.log(e.message);
   }
@@ -574,7 +566,6 @@ const deleteBlog = async (id) => {
   try {
     await fetch(url + '/blogs/' + id, options);
   } catch (e) {
-    // console.log(e.message());
     throw new Error(e.message);
   }
   renderUsersBlogs();
@@ -590,22 +581,8 @@ const addLike = async (id) => {
 const removeLike = async (id) => {
 
 };
+/* ---------------------------------------------- */
 
-
-const createUserOptions = (users) => {
-  userLists.forEach((list) => {
-    // clear user list
-    list.innerHTML = "";
-    users.forEach((user) => {
-      // create options with DOM methods
-      const option = document.createElement("option");
-      option.value = user.user_id;
-      option.innerHTML = user.name;
-      option.classList.add("light-border");
-      list.appendChild(option);
-    });
-  });
-};
 
 
 /* 
@@ -630,8 +607,6 @@ signupForm.addEventListener("submit", async (evt) => {
     }
   }
 
-  console.log(params);
-
   const fetchOptions = {
     method: "POST",
     headers: {
@@ -646,7 +621,8 @@ signupForm.addEventListener("submit", async (evt) => {
   if (!json.user) {
     alert('Rekisteröinti epäonnistui!');
   } else {
-  // save token
+
+  // save token & user id
   sessionStorage.setItem("token", json.token);
   sessionStorage.setItem("loggedUserId", json.user.ID);
 
@@ -700,7 +676,8 @@ loginForm.addEventListener("submit", async (evt) => {
   if (!json.user) {
     alert(json.message);
   } else {
-    // save token
+
+    // save token & user id
     sessionStorage.setItem("token", json.token);
     sessionStorage.setItem("loggedUserId", json.user.ID);
 
@@ -724,9 +701,6 @@ loginForm.addEventListener("submit", async (evt) => {
 });
 
 navMyblog.addEventListener("click", async (evt)=>{
-  //evt.preventDefault();
-  //renderUsersBlogs();
-  //frontpageContainer.style.display ="none";
   navMyblog.setAttribute("class", "active")
   navLogin.setAttribute("class", "");
   navHome.setAttribute("class", "");
@@ -817,4 +791,18 @@ if (sessionStorage.getItem("token")) {
   navSignup.style.display = "none";
   navMyblog.style.display = "block";
   getUsers();
+}
+
+function isnull(value, replacingValue) {
+  var returnValue = replacingValue;
+  try {
+      if (value != undefined) {
+          if (value != 'null' && value != 'Unknown') {
+              returnValue = value;
+          }
+      }
+  } catch (error) {
+      console.log(error);
+  }
+  return returnValue;
 }
