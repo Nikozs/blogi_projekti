@@ -52,7 +52,23 @@ body {
   background-color: white;
   padding: 20px;
   margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 20px;
 }
+
+.card p{
+  display: flex;
+  flex-direction: row;
+}
+
+#like {
+ width: 30px;
+}
+
+#dislike {
+   width: 30px;
+ }
 
 /* Clear floats after the columns */
 .row:after {
@@ -580,4 +596,27 @@ float: right;
   margin-left: 15%;
   margin-right: 15%;
   border-radius: 10px;
+}
+
+button#addNewPost {
+	width: 50%;
+	margin-top: 5px;
+	padding: 4px;
+	border-radius: 5px;
+	margin-left: 25%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+button#editBlog {
+ width: 50%;
+} 
+
+button#deleteBlog {
+  width: 50%;
+}
+
+.profilepicture {
+  width: 100%;
 }

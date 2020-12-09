@@ -56,7 +56,7 @@ const renderUsersBlogs = async () => {
     var userinblogit = await getBlogsByUserId(userid);
 
     //KORJAA: näytä blogit kun käyttäjä ei ole kirjautuneena
-    
+
     var u = await getUserById(userid);
     var useri=u[0];
 
@@ -70,7 +70,7 @@ const renderUsersBlogs = async () => {
     var leftcolumn = `<div class="leftcolumn">`
 
     if (sessionStorage.getItem("loggedUserId") !== undefined && userid == sessionStorage.getItem("loggedUserId")) {
-    leftcolumn+=`<button id="addNewPost" onclick="openNewBlogForm()" style="width: 100%">Add new</button>`
+    leftcolumn+=`<button id="addNewPost" onclick="openNewBlogForm()">Add new</button>`
     }
 
     for (var b = 0; b < userinblogit.length; b++) {
@@ -92,11 +92,11 @@ const renderUsersBlogs = async () => {
       </div><br>
       <span class="content">` + blogi.Content + `</span>
       </div>
-      <p class="blogLikes">Likes: ` + blogi.amountOfLikes + ` <button>+</button><button>-</button></p>
+      <p class="blogLikes">Likes: ` + blogi.amountOfLikes + ` <button id="like">+</button><button id="dislike">-</button></p>
       <p class="blogCategory">Category: <button>dfg</button></p>`
 
       if (sessionStorage.getItem("loggedUserId") !== undefined && blogi.UserID == sessionStorage.getItem("loggedUserId")) {
-        leftcolumn+='<button style="width: 50%" onclick="openModifyBlogForm('+blogi.ID+')">Muokkaa</button><button style="width: 50%" onclick="deleteBlog('+blogi.ID+')">Poista</button>';
+        leftcolumn+='<button id="editBlog" onclick="openModifyBlogForm('+blogi.ID+')">Muokkaa</button><button id="deleteBlog" onclick="deleteBlog('+blogi.ID+')">Poista</button>';
       }
 
       leftcolumn+=`</div>`
@@ -117,7 +117,7 @@ const renderUsersBlogs = async () => {
      `<div class="rightcolumn">
         <div class="card">
           <h2>About Me</h2>
-          <img class="profilepicture" style="height: 100px" src="`+profimgsrc+`"/>
+          <img class="profilepicture" src="`+profimgsrc+`"/>
           <p>` + useri.Description + `</p>
         </div>
       </div>
@@ -725,6 +725,8 @@ loginForm.addEventListener("submit", async (evt) => {
 
 navMyblog.addEventListener("click", async (evt)=>{
   //evt.preventDefault();
+  //renderUsersBlogs();
+  //frontpageContainer.style.display ="none";
   navMyblog.setAttribute("class", "active")
   navLogin.setAttribute("class", "");
   navHome.setAttribute("class", "");
