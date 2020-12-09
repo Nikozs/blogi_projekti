@@ -145,7 +145,7 @@ async function editBlogInfoForm() {
   <form id="editBlogInfoForm">
   <label for="BlogName"><b>Blog Name</b></label>
   <br>
-    <input type="text" placeholder="Enter Blog Name" name="BlogName" value="`+ useri.BlogName +`" required>
+    <input type="text" placeholder="Enter Blog Name" name="BlogName" value="`+ useri.BlogName +`" title="Max 20 letters" pattern=".{1,20}" required>
     <br><br>
      <br>
     <label for="image"><b>Profile image: </b></label><br>
@@ -153,7 +153,7 @@ async function editBlogInfoForm() {
     <br><br>
     <label for="AboutMe"><b>Description:</b></label>
     <br>
-    <textarea id="description" rows="10" cols="30" placeholder="Enter description" name="Description" required>`+ useri.Description +`</textarea><br>
+    <textarea id="description" rows="10" cols="30" placeholder="Enter description" name="Description" maxlength="200" required>`+ useri.Description +`</textarea><br>
     <input type="hidden" name="ID" value="`+ userid +`">
 
     <button type="submit">Confirm</button>

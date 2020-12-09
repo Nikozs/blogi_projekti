@@ -61,6 +61,7 @@ body {
 .card p{
   display: flex;
   flex-direction: row;
+  word-wrap: anywhere;
 }
 
 #like {
@@ -68,7 +69,7 @@ body {
 }
 
 #dislike {
-   width: 30px;
+  width: 30px;
  }
 
 /* Clear floats after the columns */
@@ -604,13 +605,6 @@ button#addNewPost {
 	align-items: center;
 }
 
-button#editBlog {
- width: 50%;
-} 
-
-button#deleteBlog {
-  width: 50%;
-}
 
 .profilepicture {
   width: 100%;
@@ -626,3 +620,39 @@ textarea {
 .leftcolumn .card:last-child {
   margin-bottom: 10px;
 }
+
+
+#editBlog {
+  background: linear-gradient(45deg, #258291, #13f721);
+  color: white;
+  padding: 14px 20px;
+  margin: 8%;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+	width: 33%;
+  opacity: 0.9;
+}
+
+#editBlog:hover {
+  opacity: 1;
+}
+
+
+#deleteBlog {
+	background: linear-gradient(45deg, #ef6805, #d41313);
+	color: white;
+	padding: 14px 20px;
+	margin-left: 10%;
+	border: none;
+	border-radius: 5px;
+  cursor: pointer;
+  width: 33%;
+	opacity: 0.9;
+	/* padding-left: 24px; */
+}
+
+#deleteBlog:hover {
+  opacity: 1;
+}
+
