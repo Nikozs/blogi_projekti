@@ -620,3 +620,10 @@ button#deleteBlog {
 .profilepicture {
   width: 100%;
 }
+
+textarea {
+	max-width: 650px;
+	height: 114px;
+	max-height: 100px;
+	width: 720px;
+}
