@@ -8,9 +8,9 @@
   <link rel="stylesheet" type="text/css" href="css/styles.css" media="screen" />
   <title>Blogiprojekti</title>
   <body onload="onPageLoading()">
-    <div class="navbar-container">
+    <!--<div class="navbar-container">
       <div class="topnav">
-        <a id="navhome" class="" href="/ " onclick="window.location.href='/'">Home</a>
+        <a id="navhome" class="" href="/" onclick="window.location.href='/'">Home</a>
         <a id="navmyblog" class="" href="">My blog</a>
         <a id="navsignup" class="" href="/ ">Sign up</a>
         <a id="navlogin" class="" href="/ ">Log in</a>
@@ -30,7 +30,47 @@
           </button>
         </div>
       </div>
-    </div>
+    </div>-->
+
+
+    <nav class="navbar">
+      <span class="navbar-toggle" id="js-navbar-toggle">
+              <i class="fa fa-bars"></i>
+          </span>
+       <a id="navhome" class="logo" href="/" onclick="window.location.href='/'">Home</a>
+       
+        <div class="search-container">
+          <input
+            id="search"
+            type="text"
+            placeholder="Search.."
+            name="search"
+            onkeydown="if (event.keyCode == 13)
+          document.getElementById('btnSearch').click()"
+          />
+          <button id="btnSearch" type="submit" onclick="renderSearchResults();">
+            <i class="fa fa-search"></i>
+          </button>
+          </div>
+      
+      <ul class="main-nav" id="js-menu">
+
+        <li>
+          <a id="navmyblog" class="" href="">My blog</a>
+        </li>
+        <li>
+          <a id="navsignup" class="" href="/ ">Sign up</a>
+        </li>
+
+        <li>
+          <a id="navlogin" class="" href="/ ">Log in</a>
+        </li>
+        <li>
+          <a id="navlogout" class="" href="/ ">Log out</a>
+        </li>
+
+      </ul>
+    </nav>
 
     <div class="searchresultsContainer"><h2>Haun tulokset:</h2></div>
 

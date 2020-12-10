@@ -73,11 +73,12 @@ const renderUsersBlogs = async () => {
       </div><br>
       <span class="content">` + blogi.Content + `</span>
       </div>
+
       <p class="blogLikes">Likes: ` + blogi.amountOfLikes + ` <button id="like">+</button><button id="dislike">-</button></p>
       <p class="blogCategory">Category: <button>dfg</button></p>`
 
       if (sessionStorage.getItem("loggedUserId") !== undefined && blogi.UserID == sessionStorage.getItem("loggedUserId")) {
-        leftcolumn+='<button id="editBlog" onclick="openModifyBlogForm('+blogi.ID+')">Edit</button><button id="deleteBlog" onclick="deleteBlog('+blogi.ID+')">Delete</button>';
+        leftcolumn+='<div class="buttoncontainer"><button id="editBlog" onclick="openModifyBlogForm('+blogi.ID+')">Edit</button><button id="deleteBlog" onclick="deleteBlog('+blogi.ID+')">Delete</button></div>';
       }
 
       leftcolumn+=`</div>`
@@ -339,7 +340,7 @@ async function openClickedBlog(blogid) {
   <div class="blogbody">
   <div class="fakeimg" style="height: 200px">
   <img class="blogikuvat" src="`+blogi.Image+`"/>
-  </div><br>
+  </div>
   <span class="content">` + blogi.Content + `</span>
   </div>
   <p class="blogLikes">Likes: ` + blogi.amountOfLikes + ` <button>+</button><button>-</button></p>
@@ -553,7 +554,7 @@ const getUsers = async () => {
 
 const deleteBlog = async (id) => {
   
-  var r = confirm("Oletko varma?");
+  var r = confirm("Are you sure?");
   if(r==true){
 
   const options = {
@@ -699,12 +700,12 @@ loginForm.addEventListener("submit", async (evt) => {
   }
 });
 
-navMyblog.addEventListener("click", async (evt)=>{
+/*navMyblog.addEventListener("click", async (evt)=>{
   navMyblog.setAttribute("class", "active")
   navLogin.setAttribute("class", "");
   navHome.setAttribute("class", "");
   navSignup.setAttribute("class", "")
-});
+});*/
 
 navLogout.addEventListener("click", async (evt) => {
   evt.preventDefault();
@@ -738,10 +739,10 @@ navLogout.addEventListener("click", async (evt) => {
 navSignup.addEventListener("click", async (evt) => {
   evt.preventDefault();
 
-  navSignup.setAttribute("class", "active");
+  /*navSignup.setAttribute("class", "active");
   navLogin.setAttribute("class", "");
   navHome.setAttribute("class", "");
-  navMyblog.setAttribute("class", "")
+  navMyblog.setAttribute("class", "")*/
 
   searchResults.style.display = "none";
   loginForm.style.display = "none";
@@ -753,10 +754,10 @@ navSignup.addEventListener("click", async (evt) => {
 navLogin.addEventListener("click", async (evt) => {
   evt.preventDefault();
 
-  navLogin.setAttribute("class", "active");
+  /*navLogin.setAttribute("class", "active");
   navHome.setAttribute("class", "");
   navSignup.setAttribute("class", "");
-  navMyblog.setAttribute("class", "")
+  navMyblog.setAttribute("class", "")*/
 
   searchResults.style.display = "none";
   frontpageContainer.style.display = "none";
@@ -768,10 +769,10 @@ navLogin.addEventListener("click", async (evt) => {
 navHome.addEventListener("click", async (evt) => {
   evt.preventDefault();
 
-  navHome.setAttribute("class", "active");
+  /*navHome.setAttribute("class", "active");
   navLogin.setAttribute("class", "");
   navSignup.setAttribute("class", "");
-  navMyblog.setAttribute("class", "");
+  navMyblog.setAttribute("class", "");*/
 
   frontpageContainer.style.display = "block";
   signupForm.style.display = "none";
@@ -805,3 +806,13 @@ function isnull(value, replacingValue) {
   }
   return returnValue;
 }
+
+
+
+//TEST
+    let mainNav = document.getElementById("js-menu");
+    let navBarToggle = document.getElementById("js-navbar-toggle");
+    
+    navBarToggle.addEventListener("click", function() {
+      mainNav.classList.toggle("active");
+    });
