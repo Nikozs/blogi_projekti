@@ -407,6 +407,12 @@ a#navmyblog {
     padding-top: 20px;
   }
 
+
+  .searchresultsContainer {
+    width:95%;
+    margin-left: 3% !important;
+  }
+
 }
 
 /*
