@@ -24,12 +24,12 @@ const mainContainer = document.querySelector(".mainContainer");
 */
 const renderUsersBlogs = async () => {
   const queryString = window.location.search;
-  console.log(queryString);
+  //console.log(queryString);
 
   const urlParams = new URLSearchParams(queryString);
   if (urlParams.has("ShowUserid")) {
     const userid = urlParams.get("ShowUserid");
-    console.log(userid);
+    //console.log(userid);
     var userinblogit = await getBlogsByUserId(userid);
 
     var u = await getUserByIdForBlog(userid);
@@ -74,8 +74,8 @@ const renderUsersBlogs = async () => {
       <span class="content">` + blogi.Content + `</span>
       </div>
 
-      <p class="blogLikes">Likes: ` + blogi.amountOfLikes + ` <button id="like">+</button><button id="dislike">-</button></p>
-      <p class="blogCategory">Category: <button>dfg</button></p>`
+      <p class="blogLikes">Likes: ` + blogi.amountOfLikes + `<button id="like" onclick="addLikes(`+blogi.ID+`)">+</button><button id="dislike" onclick="removeLikes(`+blogi.ID+`)">-</button></p>
+      <p class="blogCategory">Category: <button class="categoryButton">-</button></p>`
 
       if (sessionStorage.getItem("loggedUserId") !== undefined && blogi.UserID == sessionStorage.getItem("loggedUserId")) {
         leftcolumn+='<div class="buttoncontainer"><button id="editBlog" onclick="openModifyBlogForm('+blogi.ID+')">Edit</button><button id="deleteBlog" onclick="deleteBlog('+blogi.ID+')">Delete</button></div>';
@@ -106,7 +106,7 @@ const renderUsersBlogs = async () => {
 
   } else if (sessionStorage.getItem("loggedUserId") !== undefined) {
     const blogid = sessionStorage.getItem("loggedUserId");
-    console.log(blogid);
+    //console.log(blogid);
     var userinblogit = await getBlogsByUserId(blogid);
 
     for (var b = 0; b < userinblogit.length; b++) {
@@ -186,7 +186,7 @@ async function onBlogInfoModify(evt){
 
   const response = await fetch(url + "/user", fetchOptions);
   const json = await response.json();
-  console.log("Modify blog response", json);
+  //console.log("Modify blog response", json);
   if (!json.user) {
     alert(json.message);
   } else {
@@ -250,7 +250,7 @@ let params = new FormData(newBlogForm);
 
   const response = await fetch(url + "/blogs", fetchOptions);
   const json = await response.json();
-  console.log("Add blog response", json);
+  //console.log("Add blog response", json);
   if (!json.user) {
     alert(json.message);
   } else {
@@ -280,7 +280,7 @@ async function onBlogModify(evt){
 
   const response = await fetch(url + "/blogs", fetchOptions);
   const json = await response.json();
-  console.log("Modify blog response", json);
+  //console.log("Modify blog response", json);
   if (!json.user) {
     alert(json.message);
   } else {
@@ -343,8 +343,8 @@ async function openClickedBlog(blogid) {
   </div>
   <span class="content">` + blogi.Content + `</span>
   </div>
-  <p class="blogLikes">Likes: ` + blogi.amountOfLikes + ` <button>+</button><button>-</button></p>
-  <p class="blogCategory">Category: <button>dfg</button></p>
+  <p id="ClickedBlogLikes" class="blogLikes">Likes: ` + blogi.amountOfLikes + ` <button id="like" onclick="addLikes(`+blogid+`)">+</button><button id="dislike" onclick="removeLikes(`+blogid+`)">-</button></p>
+  <p class="blogCategory">Category: <button>-</button></p>
   <button onclick="closeForm()">Close</button>
   <a href="` + '?ShowUserid=' + blogi.UserID + `">Go to users blog</a> 
   </div>
@@ -359,10 +359,40 @@ function closeForm() {
   document.body.style = "overflow: auto";
 };
 
+async function addLikes(blogId){
+
+
+ var updatedBlogi= await addLike(blogId);
+
+ var ptagi = document.getElementById("ClickedBlogLikes");
+ if (ptagi) {
+  ptagi.innerHTML=`Likes: `+updatedBlogi[0].amountOfLikes+` <button id="like" onclick="addLikes(`+blogId+`)">+</button><button id="dislike" onclick="removeLikes(`+blogId+`)">-</button>`;
+  renderRandomBlogs();
+  renderPopularBlogs();
+ }
+ else{
+  renderUsersBlogs();
+ }
+
+}
+async function removeLikes(blogId){
+  var updatedBlogi=await removeLike(blogId);
+
+  var ptagi = document.getElementById("ClickedBlogLikes");
+  if (ptagi) {
+    ptagi.innerHTML=`Likes: `+updatedBlogi[0].amountOfLikes+` <button id="like" onclick="addLikes(`+blogId+`)">+</button><button id="dislike" onclick="removeLikes(`+blogId+`)">-</button>`;
+
+    renderRandomBlogs()
+    renderPopularBlogs();
+   }
+   else {
+    renderUsersBlogs();
+   }
+}
 
 async function renderRandomBlogs() {
   var randomBlogit = await getRandomBlogs();
-
+  randomBlogsit.innerHTML ="";
   for (var b = 0; b < randomBlogit.length; b++) {
     var blogi = randomBlogit[b];
 
@@ -371,15 +401,14 @@ async function renderRandomBlogs() {
     <img src="`+blogi.Image+`"></img>
     <h3> ` + blogi.Title + `</h3>
     <p>Likes: ` + blogi.amountOfLikes + `</p>
-    <p>User: ` + blogi.UserID + `</p>
-    <button onclick="openClickedBlog(`+ blogi.ID +`)">View</button>
+    <button onclick="openClickedBlog(`+ blogi.ID +`)" class="viewButton">View</button>
     </li>`;
   }
 }
 
 async function renderPopularBlogs() {
   var popularBlogit = await getPopularBlogs();
-
+  popularBlogsit.innerHTML ="";
   for (var b = 0; b < popularBlogit.length; b++) {
     var blogi = popularBlogit[b];
 
@@ -388,8 +417,7 @@ async function renderPopularBlogs() {
       <img src="`+blogi.Image+`" style="width: 100%; height: 250px"></img>
       <h3> ` + blogi.Title + `</h3>
       <p>Likes: ` + blogi.amountOfLikes + `</p>
-      <p>User: ` + blogi.UserID + `</p>
-      <button onclick="openClickedBlog(`+ blogi.ID +`)">View</button>
+      <button onclick="openClickedBlog(`+ blogi.ID +`)" class="viewButton">View</button>
       </li>`;
   }
 }
@@ -406,7 +434,7 @@ async function renderSearchResults(jep) {
     searchResults.innerHTML += `<li>
     <h3> ` + blogi.Title + `</h3>
     <p> ` + blogi.Content + `</p>
-    <button onclick="openClickedBlog(`+ blogi.ID +`)">View</button>
+    <button onclick="openClickedBlog(`+ blogi.ID +`)" class="viewButton">View</button>
     </li>`;
     }
   } else {
@@ -444,7 +472,7 @@ const getBlogById = async (blogid) => {
     const response = await fetch(url + "/blogs/" + blogid);
     const blog = await response.json();
 
-    console.log(blog);
+    //console.log(blog);
     return blog;
   } catch (e) {
     console.log(e.message);
@@ -456,7 +484,7 @@ const getBlogsByUserId = async (ShowUserid) => {
     const response = await fetch(url + "/blogs/ByUser/" + ShowUserid);
     const blogs = await response.json();
 
-    console.log(blogs);
+    //console.log(blogs);
     return blogs;
   } catch (e) {
     console.log(e.message);
@@ -505,7 +533,7 @@ const getBlogs = async () => {
     const response = await fetch(url + "/blogs/search/" + searchText);
     const blogs = await response.json();
 
-    console.log(blogs);
+    //console.log(blogs);
     return blogs;
   } catch (e) {
     console.log(e.message);
@@ -517,7 +545,7 @@ const getRandomBlogs = async () => {
     const response = await fetch(url + "/blogs/randomblogs");
     const blogs = await response.json();
 
-    console.log(blogs);
+    //console.log(blogs);
     return blogs;
   } catch (e) {
     console.log(e.message);
@@ -529,7 +557,7 @@ const getPopularBlogs = async () => {
     const response = await fetch(url + "/blogs/popularblogs");
     const blogs = await response.json();
 
-    console.log(blogs);
+    //console.log(blogs);
     return blogs;
   } catch (e) {
     console.log(e.message);
@@ -574,11 +602,39 @@ const deleteBlog = async (id) => {
 
 
 const addLike = async (id) => {
+  
+  const options = {
+    method: 'PUT',
+    headers: {
+      'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+    },
+  };
+  try {
+    const response = await fetch(url + '/blogs/addlike/' + id, options);
+    const blogi = await response.json();
+    return blogi;
+  } catch (e) {
+    throw new Error(e.message);
+  }
 
 };
 
 
 const removeLike = async (id) => {
+  
+  const options = {
+    method: 'PUT',
+    headers: {
+      'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+    },
+  };
+  try {
+    const response = await fetch(url + '/blogs/removelike/' + id, options);
+    const blogi = await response.json();
+    return blogi;
+  } catch (e) {
+    throw new Error(e.message);
+  }
 
 };
 /* ---------------------------------------------- */
@@ -807,12 +863,11 @@ function isnull(value, replacingValue) {
   return returnValue;
 }
 
-
-
-//TEST
-    let mainNav = document.getElementById("js-menu");
-    let navBarToggle = document.getElementById("js-navbar-toggle");
-    
-    navBarToggle.addEventListener("click", function() {
-      mainNav.classList.toggle("active");
-    });
+function openMenu() {
+  const nav = document.getElementById("topnavbar");
+  if (nav.className === "topnav") {
+    nav.className += " responsive";
+  } else {
+    nav.className = "topnav";
+  }
+}

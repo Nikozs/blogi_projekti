@@ -8,7 +8,8 @@ body {
 
 /* Add a gray background color with some padding */
 body {
-  font-family: Arial;
+  font-family: 'Raleway', sans-serif;
+  /*font-family: Arial;*/
   /*padding: 20px;*/
   /*background: linear-gradient(45deg, #17d7b3, #eb59a4);*/
   background: linear-gradient(45deg, #c094f6, #16f4c0);
@@ -21,9 +22,14 @@ body {
 /* Header/Blog Title */
 .header {
   padding: 30px;
-  font-size: 40px;
+  font-size: 50px;
   text-align: center;
-  background: white;
+  /*background: white;*/
+
+  /*new*/
+  background-color: #006AA3;
+  color: #02044F;
+  font-family: 'Berkshire Swash', cursive;
 }
 
 /* Create two unequal columns that floats next to each other */
@@ -31,13 +37,26 @@ body {
 .leftcolumn {
   float: left;
   width: 75%;
+
+  /*new*/
+  margin-top: 20px;
+}
+
+.leftcolumn .card {
+  width: 50%;
+  margin-left:25%
+}
+
+.rightcolumn .card {
+  width: 50%;
+  margin-right:45%
 }
 
 /* Right column */
 .rightcolumn {
   float: left;
   width: 25%;
-  padding-left: 20px;
+  /*padding-left: 20px;*/
   margin-top: 45px;
 }
 
@@ -48,6 +67,20 @@ body {
   padding: 4px;
 }
 
+
+/*new*/
+/*.leftcolumn .card {
+  width: 1000px;
+  margin-left: 50px;
+}*/
+
+
+/*new*/
+/*.rightcolumn .card {
+  margin-right: 50px;
+}*/
+
+
 /* Add a card effect for articles */
 .card {
   background-color: white;
@@ -57,6 +90,13 @@ body {
   margin-right: 10px;
   border-radius: 20px;
   word-wrap: break-word;
+  border: 1px solid;
+
+
+  border: 1px solid #006AA3;
+  color: #02044F;
+  /*background-color: #70CDFF;*/
+  box-shadow: -10px 10px 10px #006AA3;
 }
 
 .card p{
@@ -65,12 +105,35 @@ body {
   word-wrap: anywhere;
 }
 
+
+.card h2 {
+  font-family: 'Berkshire Swash', cursive;
+  font-size: 35px;
+}
+
+.card h3 {
+  font-family: 'Berkshire Swash', cursive;
+  font-size: 35px;
+}
+
 #like {
- width: 30px;
+  width: 30px;
+  border-radius: 10px;
+  border: 1px solid #02044F;
+  background-color: #006AA3;
+  color: white;
+  margin-left: 20px;
+  margin-right: 10px;
+  box-shadow: -2px 2px 5px #0077B6;
 }
 
 #dislike {
   width: 30px;
+  border-radius: 10px;
+  border: 1px solid #02044F;
+  background-color: #006AA3;
+  color: white;
+  box-shadow: -2px 2px 5px #0077B6;
  }
 
 /* Clear floats after the columns */
@@ -141,179 +204,162 @@ body {
   background: #ccc;
 }
 */
-.navbar a:hover {
-  background-color: #ddd;
-  color: black;
+
+.topnav {
+  font-family: 'Berkshire Swash', cursive;
+  overflow: hidden;
+  background-color: #170a24;
+  /*background-image: linear-gradient(white, grey);*/
+  border-bottom: 1px solid;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  z-index: 2;
 }
 
-.navbar a.active {
-  background-color: #2196f3;
-  color: white;
+.topnav a {
+  float: left;
+  display: block;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 20px;
 }
 
+.topnav .menuIcon {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
 
-.search-container {
+.topnav .search-container {
   float: right;
-  margin: 0 auto;
-  width: 80%;
-  padding-right: 100px;
-  padding-left: 45px;
-  padding-top: 5px;
+  margin-right: 19%;
 }
 
+.topnav input[type="text"] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 20px;
+  border: 1px solid;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border-right: none;
+}
 
-
-.search-container button {
+.topnav .search-container button {
   float: right;
   padding: 6px 10px;
   margin-top: 8px;
   margin-right: 16px;
   background: #ddd;
-  font-size: 17px;
+  font-size: 20px;
   border: 1px solid;
   cursor: pointer;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
-  margin: 0 auto;
-  width: 10%;
-  min-width: 31px;
 }
 
-.navbar input[type="text"] {
-  padding: 6px;
-  margin-top: 8px;
-  font-size: 17px;
-  border: 1px solid;
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
-  border-right: none;
-  width: 90%;
-  margin: 0 auto;
-  min-width: 150px;
+.topnav .search-container button:hover {
+  background: #ccc;
 }
-.navbar a {
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: #02044F;
+}
+
+.topnav a.active {
+  background-color: #0077B6;
   color: white;
-  text-decoration: none;
 }
 
-.navbar {
-  font-size: 18px;
-  overflow: hidden;
-  background-color: #000000;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  padding-bottom: 10px;
-  position: fixed;
-  width: 100%;
-  top: 0;
-}
-
-.main-nav {
-  list-style-type: none;
+.topnav a#navlogout {
   display: none;
 }
 
-.nav-links,
-.logo {
-  text-decoration: none;
-  color: rgba(255, 255, 255, 0.7);
+.topnav a#navmyblog {
+  display: none;
 }
 
-.main-nav li {
+/* Style all font awesome icons */
+.fa-facebook {
+  padding: 20px;
+  font-size: 30px;
+  width: 50px;
   text-align: center;
-  margin: 15px auto;
+  text-decoration: none;
 }
 
-.logo {
-  display: inline-block;
-  font-size: 22px;
-  margin-top: 10px;
-  margin-left: 20px;
+.fa-twitter {
+  padding: 20px;
+  font-size: 30px;
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
 }
 
-.navbar-toggle {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  cursor: pointer;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 24px;
+/* Add a hover effect if you want */
+.fa:hover {
+  opacity: 0.7;
 }
 
-.active {
-  display: block;
+
+
+@media screen and (max-width: 460px) {
+  button#addNewPost {
+    width: 68% !important;
+      }
 }
-
-@media screen and (min-width: 768px) {
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 0;
-    height: 70px;
-    align-items: center;
-    position: fixed;
-    width: 100%;
-  }
-
-  .main-nav {
-    display: flex;
-    margin-right: 30px;
-    flex-direction: row;
-    justify-content: flex-end;
-  }
-
-  .main-nav li {
-    margin: 4px;
-    margin-bottom: auto;
-  }
-
-  .nav-links {
-    margin-left: 40px;
-  }
-
-  .logo {
-    margin-top: 0;
-  }
-
-  .navbar-toggle {
+@media screen and (max-width: 655px) {
+  .topnav a:not(:first-child) {
     display: none;
   }
 
-  .logo:hover,
-  .nav-links:hover {
-    color: rgba(255, 255, 255, 1);
-  }
 
-  .search-container button {
+  .topnav a.menuIcon {
     float: right;
-    padding: 6px 10px;
-    margin-top: 8px;
-    margin-right: 16px;
-    background: #ddd;
-    font-size: 17px;
-    border: 1px solid;
-    cursor: pointer;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-    margin: 0 auto;
-    width: 20%;
-    min-width: 31px;
-  }
-  
-  .navbar input[type="text"] {
-    padding: 6px;
-    margin-top: 8px;
-    font-size: 17px;
-    border: 1px solid;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-    border-right: none;
-    width: 80%;
-    margin: 0 auto;
-    min-width: 150px;
+    display: block;
   }
 
+  .topnav.responsive {
+    position: relative;
+  }
+
+  .topnav.responsive .menuIcon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+
+  .topnav.responsive #userinfo {
+    padding: 0;
+  }
+
+  .topnav .search-container {
+    display: none;
+    margin-right: 19%;
+  }
+
+  .topnav.responsive .search-container {
+    display: block;
+    float: left;
+    padding-left: 16px;
+    padding-bottom: 14px;
+  }
+}
 
 
+.active {
+  display: block;
 }
 
 
@@ -330,26 +376,10 @@ a#navmyblog {
   opacity: 0.7;
 }
 
-/* Set a specific color for each brand */
 
-/*@media screen and (max-width: 600px) {
-  .topnav .search-container {
-    float: none;
-  }
-  .topnav a,
-  .topnav input[type="text"],
-  .topnav .search-container button {
-    float: none;
-    display: block;
-    text-align: left;
-    width: 100%;
-    margin: 0;
-    padding: 14px;
-  }
-  .topnav input[type="text"] {
-    border: 1px solid #ccc;
-  }
-}*/
+.popupcard .blogbody {
+  overflow-y: auto;
+}
 
 
 /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
@@ -362,7 +392,20 @@ a#navmyblog {
 
   .rightcolumn .card {
     margin-bottom: 10px;
+    margin-left: 25%;
+   min-width: 310px;
   }
+
+  button#addNewPost {
+    width: 41%;
+  }
+
+
+  .leftcolumn .card {
+   min-width: 310px;
+    margin-right: 10%;
+  }
+  
 
   .search-container button {
     float: right;
@@ -399,14 +442,13 @@ a#navmyblog {
   }
 
   .popupcard .blogbody {
-    overflow: scroll;
+    overflow-y: scroll;
   }
 
   #js-menu {
     padding-left: 0px;
     padding-top: 20px;
   }
-
 
   .searchresultsContainer {
     width:95%;
@@ -415,13 +457,20 @@ a#navmyblog {
 
 }
 
+@media screen and (max-height: 950px) {
+  .popupcard {
+    height: 97% !important;
+    width: 97% !important;
+    overflow: scroll;
+  }
+}
+
 /*
    Styles for sign up
 */
-
 #signupForm {
 	display: none;
-	margin-top: 6%;
+	margin-top: 0%;
 	margin-bottom: 25%;
 	margin-left: 25%;
 	margin-right: 25%;
@@ -431,13 +480,17 @@ a#navmyblog {
 	padding-top: 3%;
 }
 
-
 /* Add padding to containers */
 .signupcontainer {
   padding: 16px;
   border: 2px solid;
   border-radius: 60px;
   background-color: #e3e3e3;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
 }
 
 /* Full-width input fields */
@@ -504,8 +557,6 @@ input[type="password"]:focus {
 /*
   Styles for login
 */
-
-/* Add padding to containers */
 #loginForm {
   display: none;
   margin-top: 50px;
@@ -523,7 +574,6 @@ input[type="password"]:focus {
   background-color: #e3e3e3;
 }
 
-/* Full-width input fields */
 .logincontainer input[type="text"],
 input[type="password"] {
   width: 100%;
@@ -541,7 +591,6 @@ input[type="password"]:focus {
   outline: none;
 }
 
-/* Overwrite default styles of hr */
 .logincontainer hr {
   border: 1px solid #000000;
   margin-bottom: 25px;
@@ -564,7 +613,6 @@ input[type="password"]:focus {
   opacity: 1;
 }
 
-/* Add a blue text color to links */
 .logincontainer a {
   color: dodgerblue;
 }
@@ -576,7 +624,6 @@ input[type="password"]:focus {
   font-size: 42px;
 }
 
-/* Set a grey background color and center the text of the "sign in" section */
 .signin {
   background-color: #f1f1f1;
   text-align: center;
@@ -589,7 +636,7 @@ input[type="password"]:focus {
 .searchresultsContainer {
   display: none;
   background: white;
-  margin-top: 150px;
+  margin-top: 125px;
   margin-left: 15%;
   margin-right: 15%;
   border-radius: 10px;
@@ -616,10 +663,18 @@ input[type="password"]:focus {
   margin-bottom: 5px;
   float:right
  }
+
+ .searchresultsContainer .viewButton{
+   padding: 0px;
+ }
  
  #noResults {
 	text-align: center;
 	padding: 50px;
+}
+
+#btnSearch {
+  position: absolute;
 }
 
 /*
@@ -633,7 +688,6 @@ input[type="password"]:focus {
 /*
   Styles for frontpage
 */
-
 .frontpageContainer {
   display: block;
   text-align: center;
@@ -641,40 +695,103 @@ input[type="password"]:focus {
 }
 
 
+/*olD
+#randomBlogitList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
+  word-break: break-all;
+}
+*/
 
 #randomBlogitList {
   display: flex;
   /*border: 1px solid black;*/
   flex-wrap: wrap;
-  justify-content: space-between;
-  margin-top: 20px;
+  justify-content: space-around;
+  margin: 80px 15px 180px;
+  padding-left: 0;
   word-break: break-all;
+  list-style-type: none;
 }
 
 
+
+/* OLD
 #randomBlogitList li {
   border: 1px solid black; 
   list-style-type: none;
+}*/
+
+#randomBlogitList li {
+  list-style-type: none;
+  border-radius: 10px;
+  border: 1px solid #006AA3;
+  color: #02044F;
+  background-color: #70CDFF;
+  margin: 5px 10px 30px 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-bottom: 15px;
+  align-content: center;
+  width: 475px;
+  box-shadow: -10px 10px 10px #006AA3;
 }
 
 #randomBlogitList img {
   width: 100%;
   height: 250px;
+  padding: 4px;
+  border-radius: 4px;
 }
 
+/*
+old
 #popularBlogitList {
   display: flex;
-  /*border: 1px solid black;*/
   flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 20px;
   word-break: break-all;
 }
 
-
 #popularBlogitList li {
   border: 1px solid black; 
   list-style-type: none;
+}*/
+
+
+#popularBlogitList {
+  display: flex;
+  /*border: 1px solid black;*/
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 80px 15px 180px;
+  padding-left: 0;
+  word-break: break-all;
+  list-style-type: none;
+}
+
+
+#popularBlogitList li {
+  border-radius: 10px;
+  border: 1px solid #006AA3;
+  color: #02044F;
+  background-color: #70CDFF;
+  margin: 5px 10px 30px 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-bottom: 15px;
+  align-content: center;
+  width: 475px;
+  box-shadow: -10px 10px 10px #006AA3;
+}
+#popularBlogitList img {
+  width: 100%;
+  height: 250px;
+  padding: 4px;
+  border-radius: 4px;
 }
 
 .content {
@@ -699,7 +816,6 @@ input[type="password"]:focus {
   margin: -25px 0 0 -25px;
 }*/
 
-
 #newBlogPopup {
   max-width: 90%;
   background-color: white;
@@ -711,6 +827,24 @@ input[type="password"]:focus {
   transform: translate(-50%, -50%);
 }
 
+
+#newBlogPopup h1 {
+  font-family: 'Berkshire Swash', cursive;
+}
+
+#newBlogPopup button {
+  border-radius: 10px;
+  border: 1px solid #02044F;
+  color: white;
+  background-color: #006AA3;
+  margin: 20px;
+  padding: 5px;
+  box-shadow: -2px 2px 5px #0077B6;
+}
+
+#newBlogPopup label {
+  margin-bottom: 10px;
+}
 
 #editBlogInfoPopup {
     max-width: 90%;
@@ -760,6 +894,31 @@ input[type="password"]:focus {
   transform: translate(-50%, -50%);
 }
 
+/* NEW */
+#modifyBlogPopup h1 {
+  font-family: 'Berkshire Swash', cursive;
+}
+
+#modifyBlogPopup label {
+  margin-bottom: 10px;
+}
+
+#modifyBlogPopup input,
+#modifyBlogPopup textarea,
+#modifyBlogPopup select {
+  margin-top: 10px;
+}
+
+#modifyBlogPopup button {
+  border-radius: 10px;
+  border: 1px solid #02044F;
+  color: white;
+  background-color: #006AA3;
+  margin: 20px;
+  padding: 5px;
+  box-shadow: -2px 2px 5px #0077B6;
+}
+/* -- */
 
 .modaloverlay {
   display: block;
@@ -771,17 +930,21 @@ input[type="password"]:focus {
   top: 0;
 }
 
-
 #editBlogInfo {
 margin-top: 5%;
 float: right;
-background: linear-gradient(45deg, #258291, #13f721);
-color: white;
+background: linear-gradient(45deg, #000000, #000000);
+color: #ffffff;
 padding: 14px 20px;
-border: none;
+/*border: none;*/
 border-radius: 5px;
 cursor: pointer;
 margin-bottom: 0%;
+
+/* NEW */
+box-shadow: -2px 2px 5px #0077B6;
+padding: 5px 10px;
+border: 1px solid #02044F;
 }
 
 .blogikuvat {
@@ -790,7 +953,8 @@ margin-bottom: 0%;
 }
 
 .popupcard {
-  background-color: white;
+  border: 1px solid #006AA3;
+  background-color: #f3f9fc;
   padding: 20px;
   border-radius: 10px;
   position: absolute;
@@ -804,7 +968,14 @@ margin-bottom: 0%;
   float: right;
 }
 
+.popupcard h3 {
+  font-family: 'Berkshire Swash', cursive;
+  font-size: 35px;
+}
 
+
+/*
+OLD
 button#addNewPost {
 	width: 50%;
 	margin-top: 20px;
@@ -818,6 +989,23 @@ button#addNewPost {
   color: white;
   border: none;
   cursor: pointer;
+}*/
+
+button#addNewPost {
+  width: 50%;
+  margin-top: 20px;
+  margin-left: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid #02044F;
+  background-color: #006AA3;
+  color: white;
+  box-shadow: -2px 2px 5px #0077B6;
+  padding: 5px 10px;
+  cursor: pointer;
+  min-width: 310px;
 }
 
 
@@ -836,11 +1024,10 @@ textarea {
   margin-bottom: 10px;
 }
 
-
 #editBlog {
   background: linear-gradient(45deg, #258291, #13f721);
   color: white;
-  padding: 14px 20px;
+  padding: 8px 20px;
   margin: 8%;
   border: none;
   border-radius: 5px;
@@ -853,11 +1040,10 @@ textarea {
   opacity: 0.9;
 }
 
-
 #deleteBlog {
 	background: linear-gradient(45deg, #ef6805, #d41313);
 	color: white;
-	padding: 14px 20px;
+	padding: 8px 20px;
 	margin-left: 10%;
 	border: none;
 	border-radius: 5px;
@@ -877,4 +1063,43 @@ textarea {
 
 .mainContainer {
   margin-top: 50px;
+}
+
+.mainTitle {
+  font-family: 'Berkshire Swash', cursive;
+  font-size: 50px;
+  color: #170a24;
+  text-shadow: -5px 5px 10px #006AA3;;
+}
+
+.viewButton {
+  /*background: linear-gradient(4deg, #b1c7ea, #fafdff);
+  color: rgb(31, 30, 30);
+  padding: 16px 20px;
+  margin: 0 25%;
+  border: none;
+  border-radius: 5px;
+  width: 50%;
+  font-size: 15px;
+*/
+  background: linear-gradient(4deg, #1a1b1e, #174564);
+  color: rgb(255 255 255);
+  padding: 10px 7px;
+  margin: 0px 25%;
+  border: none;
+  border-radius: 5px;
+  width: 50%;
+  font-size: 15px;
+}
+
+img {
+  border-radius: 4px;
+}
+
+.fakeimg {
+  border-radius: 4px;
+}
+
+.header h2 {
+  color: white;
 }

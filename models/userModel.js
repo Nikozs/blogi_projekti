@@ -5,7 +5,7 @@ const promisePool = pool.promise();
 const getAllUsers = async () => {
     try {
       const [rows] = await promisePool.query('SELECT * FROM user');
-      console.log('rows', rows);
+      //console.log('rows', rows);
       return rows;
     } catch (e) {
       console.log('userModel error:', e.message);
@@ -16,7 +16,7 @@ const getAllUsers = async () => {
   const getUserById = async (ID) => {
     try {
       const [rows] = await promisePool.execute('SELECT * FROM user WHERE ID = ?', [ID]);
-      console.log('rows', rows);
+      //console.log('rows', rows);
       return rows;
     } catch (e) {
       console.log('userModel error:', e.message);
@@ -32,7 +32,7 @@ const getAllUsers = async () => {
           'INSERT INTO user (Username, Email, Password) VALUES (?, ?,?)',
           params
       );
-      console.log('rows', rows);
+      //console.log('rows', rows);
       return rows;
     } catch (e) {
       console.log('userModel error:', e.message);

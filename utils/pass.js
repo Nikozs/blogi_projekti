@@ -33,7 +33,7 @@ passport.use(
       secretOrKey: "testi",
     },
     async (jwtPayload, done) => {
-      console.log(jwtPayload);
+      //console.log(jwtPayload);
       try {
         const [user] = await userModel.getUserById(jwtPayload.ID);
         if (user === undefined) {

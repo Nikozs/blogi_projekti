@@ -66,7 +66,7 @@ const blog_create_post = async (req, res) => {
 };
 
 const blog_update_put = async (req, res) => {
-  console.log('Blog updated: ', req.body);
+  //console.log('Blog updated: ', req.body);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -82,7 +82,7 @@ const blog_update_put = async (req, res) => {
 };
 
 const blog_delete = async (req, res) => {
-  console.log('Blog deleted')
+  //console.log('Blog deleted')
   const id = req.params.id;
   const blogi = await blogModel.deleteBlog(id);
   res.json(blogi);

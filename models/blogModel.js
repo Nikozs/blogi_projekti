@@ -61,7 +61,7 @@ const getBlogBySearchParam = async (searchparam) => {
 const getRandomBlogs = async () => {
   try {
     const [rows] = await promisePool.execute(
-      "SELECT * FROM post ORDER BY RAND() LIMIT 10"
+      "SELECT * FROM post ORDER BY RAND() LIMIT 6"
     );
     //console.log("rows", rows);
     return rows;
@@ -74,7 +74,7 @@ const getRandomBlogs = async () => {
 const getPopularBlogs = async () => {
   try {
     const [rows] = await promisePool.execute(
-      "SELECT * FROM post ORDER BY amountOfLikes DESC LIMIT 10"
+      "SELECT * FROM post ORDER BY amountOfLikes DESC LIMIT 6"
     );
     return rows;
   } catch (e) {
@@ -130,7 +130,7 @@ const updateBlog = async (params) => {
         'UPDATE post SET Title = ?, UpdateAt = NOW(),  Content = ?, Image = ? WHERE ID = ?',
         params
     );
-    console.log('rows', rows);
+    //console.log('rows', rows);
     return rows;
   } catch (e) {
     console.log('blogModel error', e.message);
@@ -152,7 +152,7 @@ const deleteBlog = async (id) => {
 const getBlogInfoFromUserById = async (ID) => {
   try {
     const [rows] = await promisePool.execute('SELECT Description, ProfileImage, BlogName FROM user WHERE ID = ?', [ID]);
-    console.log('rows', rows);
+    //console.log('rows', rows);
     return rows;
   } catch (e) {
     console.log('userModel error:', e.message);

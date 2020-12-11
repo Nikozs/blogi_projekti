@@ -32,8 +32,8 @@ router.get("/ByUser/:id", blogController.blog_list_getByUserId);
 router.get("/:id", blogController.blog_get);
 router.get("/search/:searchparam", blogController.blog_list_getbysearch);
 
-router.get("/addlike/:id", blogController.blog_AddLike);
-router.get("/removelike/:id", blogController.blog_RemoveLike);
+router.put("/addlike/:id", blogController.blog_AddLike);
+router.put("/removelike/:id", blogController.blog_RemoveLike);
 
 router.post("/", upload.single('Image'), injectFile, [
   body('Title', 'vaadittu kenttä').isLength({min: 1}),
