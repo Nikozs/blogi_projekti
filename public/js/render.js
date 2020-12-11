@@ -60,14 +60,15 @@ const renderUsersBlogs = async () => {
       leftcolumn +=  
       `<div class="card">
       <h3> ` + blogi.Title + `</h3>
-      <h5> Created at: ` + new Date(blogi.CreateAt).toLocaleDateString('en-GB', { hour: '2-digit', minute: '2-digit'}) + `</h5>`
+      <div class="datecontainer">
+      <h5 class="dates1"> Created at: ` + new Date(blogi.CreateAt).toLocaleDateString('en-GB', { hour: '2-digit', minute: '2-digit'}) + `</h5>`
       
       if(blogi.UpdateAt !== null) {
-        leftcolumn+='<h5> Update at: ' + new Date(blogi.UpdateAt).toLocaleDateString('en-GB', { hour: '2-digit', minute: '2-digit'}) + '</h5>';
+        leftcolumn+='<h5 class="dates2"> Update at: ' + new Date(blogi.UpdateAt).toLocaleDateString('en-GB', { hour: '2-digit', minute: '2-digit'}) + '</h5>';
       }
 
       leftcolumn+=
-      `<div class="blogbody">
+      `</div><div class="blogbody">
       <div class="fakeimg" style="height: 200px">
       <img class="blogikuvat" src="`+imgsrc+`"/>
       </div><br>

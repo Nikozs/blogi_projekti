@@ -48,7 +48,7 @@ body {
 }
 
 .rightcolumn .card {
-  width: 50%;
+  width: 90%;
   margin-right:45%
 }
 
@@ -57,7 +57,7 @@ body {
   float: left;
   width: 25%;
   /*padding-left: 20px;*/
-  margin-top: 45px;
+  margin-top: 20px;
 }
 
 /* Fake image */
@@ -86,7 +86,7 @@ body {
   background-color: white;
   padding: 20px;
   margin-top: 20px;
-  margin-left: 10px;
+  margin-left: 0px;
   margin-right: 10px;
   border-radius: 20px;
   word-wrap: break-word;
@@ -204,11 +204,16 @@ body {
   background: #ccc;
 }
 */
+.navbar-container {
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
 
 .topnav {
   font-family: 'Berkshire Swash', cursive;
   overflow: hidden;
-  background-color: #170a24;
+  background-color: #000000;
   /*background-image: linear-gradient(white, grey);*/
   border-bottom: 1px solid;
   position: fixed;
@@ -236,7 +241,7 @@ body {
 
 .topnav .search-container {
   float: right;
-  margin-right: 19%;
+  margin-right: 7%;
 }
 
 .topnav input[type="text"] {
@@ -352,8 +357,13 @@ body {
   .topnav.responsive .search-container {
     display: block;
     float: left;
-    padding-left: 16px;
+    /*padding-left: 16px;*/
     padding-bottom: 14px;
+    margin: 20%;
+    margin-bottom: 0%;
+    margin-top: 0%;
+    margin-left: 25%;
+    margin-right: 25%;
   }
 }
 
@@ -380,7 +390,13 @@ a#navmyblog {
 .popupcard .blogbody {
   overflow-y: auto;
 }
-
+@media screen and (max-width: 700px) {
+  .topnav .search-container {
+    /* float: right; */
+    /*margin-right: 5%;
+    padding-left: 46%;*/
+  }
+}
 
 /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 800px) {
@@ -392,7 +408,9 @@ a#navmyblog {
 
   .rightcolumn .card {
     margin-bottom: 10px;
-    margin-left: 25%;
+    min-width: 310px;
+   width: 96%;
+   margin-left: 2%;
    min-width: 310px;
   }
 
@@ -403,7 +421,9 @@ a#navmyblog {
 
   .leftcolumn .card {
    min-width: 310px;
-    margin-right: 10%;
+   width: 96%;
+   margin-left: 2%;
+   /* margin-right: 10%;*/
   }
   
 
@@ -455,6 +475,10 @@ a#navmyblog {
     margin-left: 3% !important;
   }
 
+  .topnav .search-container {
+    /*margin-right: 20%;*/
+  }
+
 }
 
 @media screen and (max-height: 950px) {
@@ -480,6 +504,22 @@ a#navmyblog {
 	padding-top: 3%;
 }
 
+#popularBlogitList li {
+	border-radius: 10px;
+	border: 1px solid #006AA3;
+	color: #02044F;
+	background-color: #E6ECEF;
+	margin: 5px 10px 30px 10px;
+	padding-right: 0px;
+	padding-left: 0px;
+	padding-bottom: 15px;
+	align-content: center;
+	width: 475px;
+	box-shadow: -10px 10px 10px #006AA3;
+}
+
+
+
 /* Add padding to containers */
 .signupcontainer {
   padding: 16px;
@@ -491,6 +531,18 @@ a#navmyblog {
   top: 50%;
   left: 50%;
   z-index: -1;
+
+    border-radius: 10px;
+    border: 1px solid #006AA3;
+    color: #02044F;
+    background-color: #E6ECEF;
+    margin: 5px 10px 30px 10px;
+    padding-bottom: 15px;
+    align-content: center;
+    width: 475px;
+    box-shadow: -10px 10px 10px #006AA3;
+    z-index: 1;
+  
 }
 
 /* Full-width input fields */
@@ -674,7 +726,8 @@ input[type="password"]:focus {
 }
 
 #btnSearch {
-  position: absolute;
+  position: fixed;
+  width: auto;
 }
 
 /*
@@ -710,7 +763,7 @@ input[type="password"]:focus {
   /*border: 1px solid black;*/
   flex-wrap: wrap;
   justify-content: space-around;
-  margin: 80px 15px 180px;
+  /*margin: 80px 15px 180px;*/
   padding-left: 0;
   word-break: break-all;
   list-style-type: none;
@@ -768,7 +821,7 @@ old
   /*border: 1px solid black;*/
   flex-wrap: wrap;
   justify-content: space-around;
-  margin: 80px 15px 180px;
+  /*margin: 80px 15px 180px;*/
   padding-left: 0;
   word-break: break-all;
   list-style-type: none;
@@ -1090,7 +1143,7 @@ textarea {
   margin: 0px 25%;
   border: none;
   border-radius: 5px;
-  width: 50%;
+  width: 33%;
   font-size: 15px;
 }
 
@@ -1105,3 +1158,16 @@ img {
 .header h2 {
   color: white;
 }
+
+
+.datecontainer {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  letter-spacing: 0.404em;
+  /* font-weight: 400; */
+  /* font-size: 12px; */
+  padding-top: 0px;
+  margin-left: 2px;
+  /* padding-left: 24px; */
+  }
