@@ -729,10 +729,10 @@ input[type="password"]:focus {
   border-radius: 10px;
   border: 1px solid #006AA3;
   color: #02044F;
-  background-color: #70CDFF;
+  background-color: #E6ECEF;
   margin: 5px 10px 30px 10px;
-  padding-right: 10px;
-  padding-left: 10px;
+  /*padding-right: 10px;
+  padding-left: 10px;*/
   padding-bottom: 15px;
   align-content: center;
   width: 475px;
@@ -741,9 +741,10 @@ input[type="password"]:focus {
 
 #randomBlogitList img {
   width: 100%;
-  height: 250px;
-  padding: 4px;
-  border-radius: 4px;
+  height: 240px;
+  /*padding: 4px;*/
+  border-radius: 9px 9px 0px 0px;
+  border-bottom: 1px solid;
 }
 
 /*
@@ -778,20 +779,21 @@ old
   border-radius: 10px;
   border: 1px solid #006AA3;
   color: #02044F;
-  background-color: #70CDFF;
+  background-color: #E6ECEF;
   margin: 5px 10px 30px 10px;
-  padding-right: 10px;
-  padding-left: 10px;
+  padding-right: 0px;
+  padding-left: 0px;
   padding-bottom: 15px;
   align-content: center;
   width: 475px;
   box-shadow: -10px 10px 10px #006AA3;
 }
 #popularBlogitList img {
-  width: 100%;
-  height: 250px;
-  padding: 4px;
-  border-radius: 4px;
+  width: 102%;
+  height: 240px;
+  /*padding: 4px;*/
+  border-radius: 9px 9px 0px 0px;
+  border-bottom: 1px solid;
 }
 
 .content {
