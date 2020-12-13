@@ -12,7 +12,8 @@ body {
   /*font-family: Arial;*/
   /*padding: 20px;*/
   /*background: linear-gradient(45deg, #17d7b3, #eb59a4);*/
-  background: linear-gradient(45deg, #c094f6, #16f4c0);
+  /*background: linear-gradient(45deg, #c094f6, #16f4c0);*/
+  background:  linear-gradient(45deg, #dac0fa, #58c4ab);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -43,7 +44,7 @@ body {
 }
 
 .leftcolumn .card {
-  width: 50%;
+  width: 69%;
   margin-left:25%
 }
 
@@ -109,6 +110,13 @@ body {
 .card h2 {
   font-family: 'Berkshire Swash', cursive;
   font-size: 35px;
+
+  padding-right: 0px;
+  margin-top: 50.05px;
+  margin-right: 0px;
+  margin-bottom: 48.05px;
+  padding-left: 12px;
+
 }
 
 .card h3 {
@@ -205,9 +213,10 @@ body {
 }
 */
 .navbar-container {
-  position: fixed;
+  position: absolute;
   width: 100%;
   top: 0;
+  z-index: 100;
 }
 
 .topnav {
@@ -219,7 +228,7 @@ body {
   position: fixed;
   top: 0px;
   width: 100%;
-  z-index: 2;
+  z-index: 100;
 }
 
 .topnav a {
@@ -317,6 +326,12 @@ body {
   button#addNewPost {
     width: 68% !important;
       }
+     /* .search-container {
+        width: 100%;
+        left:47%;
+        top:60%;
+        height: 116%;
+      }*/
 }
 @media screen and (max-width: 655px) {
   .topnav a:not(:first-child) {
@@ -326,11 +341,12 @@ body {
 
   .topnav a.menuIcon {
     float: right;
-    display: block;
+    display: block !important;
   }
 
   .topnav.responsive {
-    position: relative;
+    position: fixed;
+    z-index: 100;
   }
 
   .topnav.responsive .menuIcon {
@@ -356,7 +372,6 @@ body {
 
   .topnav.responsive .search-container {
     display: block;
-    float: left;
     /*padding-left: 16px;*/
     padding-bottom: 14px;
     margin: 20%;
@@ -364,6 +379,14 @@ body {
     margin-top: 0%;
     margin-left: 25%;
     margin-right: 25%;
+  }
+
+  .signupcontainer {
+    position: absolute;
+    top: 50%;
+    left: 48%;
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -415,7 +438,20 @@ a#navmyblog {
   }
 
   button#addNewPost {
-    width: 41%;
+    width: 97% !important;
+    /* margin-top: 20px; */
+    margin-left: 1% !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid #02044F;
+    background-color: #006AA3;
+    color: white;
+    box-shadow: -2px 2px 5px #0077B6;
+    padding: 5px 10px;
+    cursor: pointer;
+    min-width: 310px;
   }
 
 
@@ -481,7 +517,7 @@ a#navmyblog {
 
 }
 
-@media screen and (max-height: 950px) {
+@media screen and (max-height: 970px) {
   .popupcard {
     height: 97% !important;
     width: 97% !important;
@@ -539,9 +575,10 @@ a#navmyblog {
     margin: 5px 10px 30px 10px;
     padding-bottom: 15px;
     align-content: center;
-    width: 475px;
+    /*width: 475px;*/
     box-shadow: -10px 10px 10px #006AA3;
     z-index: 1;
+    height: auto;
   
 }
 
@@ -710,14 +747,24 @@ input[type="password"]:focus {
   padding-bottom: 1%;
  }
 
- .searchresultsContainer button {
+ /*.searchresultsContainer button {
   text-align: center;
   margin-bottom: 5px;
   float:right
- }
+ }*/
+
+ .searchresultsContainer button {
+	text-align: center;
+	margin-bottom: 5px;
+	float: right;
+	left: 50%;
+	position: absolute;
+	min-width: 70px;
+	max-width: 70px;
+}
 
  .searchresultsContainer .viewButton{
-   padding: 0px;
+   padding: 1px;
  }
  
  #noResults {
@@ -726,8 +773,9 @@ input[type="password"]:focus {
 }
 
 #btnSearch {
-  position: fixed;
+  position: absolute;
   width: auto;
+  margin-top: 8px;
 }
 
 /*
@@ -980,13 +1028,18 @@ old
   position: fixed;
   width: 100%;
   height: 100%;
-  z-index: 99;
+  z-index: 102;
   background-color: rgba(0, 0,0, 0.5);
   top: 0;
 }
 
+
+h5.dates1 {
+  margin-right: 8%;
+}
+
 #editBlogInfo {
-margin-top: 5%;
+/* margin-top: 5%;  */
 float: right;
 background: linear-gradient(45deg, #000000, #000000);
 color: #ffffff;
@@ -1047,7 +1100,7 @@ button#addNewPost {
 }*/
 
 button#addNewPost {
-  width: 50%;
+  width: 69%;
   margin-top: 20px;
   margin-left: 25%;
   display: flex;
@@ -1123,8 +1176,10 @@ textarea {
 .mainTitle {
   font-family: 'Berkshire Swash', cursive;
   font-size: 50px;
-  color: #170a24;
-  text-shadow: -5px 5px 10px #006AA3;;
+  /*color: #000000;
+  text-shadow: -5px 5px 10px #006AA3;;*/
+  color: #fff;
+  text-shadow: -8px 5px 5px #000;
 }
 
 .viewButton {
@@ -1137,14 +1192,25 @@ textarea {
   width: 50%;
   font-size: 15px;
 */
-  background: linear-gradient(4deg, #1a1b1e, #174564);
+  background: linear-gradient(4deg, #1a1b1e, #17557e);
   color: rgb(255 255 255);
   padding: 10px 7px;
   margin: 0px 25%;
   border: none;
-  border-radius: 5px;
-  width: 33%;
+  /*border-radius: 5px;
+  width: 25%;*/
+  border-radius: 19px;
+  width: 13%;
   font-size: 15px;
+}
+
+.viewButton:hover{
+  background: linear-gradient(4deg, #1a1b1e, #539dce);
+  width:14%;
+}
+
+.frontpageContainer .viewButton {
+  min-width: 50px;
 }
 
 img {

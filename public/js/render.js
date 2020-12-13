@@ -245,7 +245,6 @@ let params = new FormData(newBlogForm);
     headers: {
       'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
     },
-    // body: JSON.stringify(params),
     body: params
   };
 
@@ -258,7 +257,6 @@ let params = new FormData(newBlogForm);
     // 
   }
   renderUsersBlogs();
-  //await addBlog(JSON.stringify(params));
 }
 
 
@@ -342,6 +340,7 @@ async function openClickedBlog(blogid) {
   <div class="fakeimg" style="height: 200px">
   <img class="blogikuvat" src="`+blogi.Image+`"/>
   </div>
+  <br>
   <span class="content">` + blogi.Content + `</span>
   </div>
   <p id="ClickedBlogLikes" class="blogLikes">Likes: ` + blogi.amountOfLikes + ` <button id="like" onclick="addLikes(`+blogid+`)">+</button><button id="dislike" onclick="removeLikes(`+blogid+`)">-</button></p>
@@ -376,6 +375,7 @@ async function addLikes(blogId){
  }
 
 }
+
 async function removeLikes(blogId){
   var updatedBlogi=await removeLike(blogId);
 
