@@ -25,12 +25,12 @@ body {
   padding: 30px;
   font-size: 50px;
   text-align: center;
-  /*background: white;*/
 
   /*new*/
-  background-color: #006AA3;
+  background-color: #094e77;
   color: #02044F;
   font-family: 'Berkshire Swash', cursive;
+  box-shadow: -5px 10px 12px #22292D
 }
 
 /* Create two unequal columns that floats next to each other */
@@ -383,8 +383,8 @@ body {
 
   .signupcontainer {
     position: absolute;
-    top: 50%;
-    left: 48%;
+    top: 450px !important;
+    left: 48% !important;
     width: 100%;
     height: 100%;
   }
@@ -561,7 +561,6 @@ a#navmyblog {
   padding: 16px;
   border: 2px solid;
   border-radius: 60px;
-  background-color: #e3e3e3;
   transform: translate(-50%, -50%);
   position: absolute;
   top: 50%;
@@ -659,8 +658,12 @@ input[type="password"]:focus {
 .logincontainer {
   padding: 16px;
   border: 2px solid;
-  border-radius: 60px;
-  background-color: #e3e3e3;
+  border-radius: 10px;
+  border: 1px solid #006AA3;
+  color: #02044F;
+  background-color: #E6ECEF;
+  box-shadow: -10px 10px 10px #006AA3;
+  z-index: 1;
 }
 
 .logincontainer input[type="text"],

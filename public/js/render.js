@@ -147,7 +147,7 @@ async function editBlogInfoForm() {
   <form id="editBlogInfoForm">
   <label for="BlogName"><b>Blog Name</b></label>
   <br>
-    <input type="text" placeholder="Enter Blog Name" name="BlogName" value="`+ useri.BlogName +`" title="Max 20 letters" pattern=".{1,20}" required>
+    <input type="text" placeholder="Enter Blog Name" name="BlogName" value="`+ isnull(useri.BlogName,'') +`" title="Max 20 letters" pattern=".{1,20}" required>
     <br><br>
      <br>
     <label for="image"><b>Profile image: </b></label><br>
@@ -155,7 +155,7 @@ async function editBlogInfoForm() {
     <br><br>
     <label for="AboutMe"><b>Description:</b></label>
     <br>
-    <textarea id="description" rows="10" cols="30" placeholder="Enter description" name="Description" maxlength="200" required>`+ useri.Description +`</textarea><br>
+    <textarea id="description" rows="10" cols="30" placeholder="Enter description" name="Description" maxlength="200" required>`+ isnull(useri.Description, '')+`</textarea><br>
     <input type="hidden" name="ID" value="`+ userid +`">
 
     <button type="submit">Confirm</button>
@@ -288,7 +288,10 @@ async function onBlogModify(evt){
 }
 
 
-function openModifyBlogForm(blogid) {
+async function openModifyBlogForm(blogid) {
+  var b = await getBlogById(blogid);
+  var blogi = b[0];
+
   var popup = document.createElement("div");
   popup.setAttribute("id", "popup");
   popup.innerHTML = 
@@ -297,13 +300,13 @@ function openModifyBlogForm(blogid) {
   <h1>Edit blog</h1>
   <form id="modifyBlogForm" enctype="multipart/form-data">
   <label for="title"><b>New title: </b></label><br>
-    <input type="text" placeholder="Enter title" name="Title" title="Max 100 letters" pattern=".{1,100}" required>
+    <input type="text" placeholder="Enter title" name="Title" value="`+ isnull(blogi.Title,'') +`" title="Max 100 letters" pattern=".{1,100}" required>
     <br><br>
     <label for="image"><b>Image: </b></label><br>
     <input type="file" name="Image" accept="image/*" placeholder="Choose file" required>
     <br><br>
     <label for="content"><b>Edit Blog text: </b></label><br>
-    <textarea id="content" rows="10" cols="30" placeholder="Enter content" name="Content" required></textarea><br>
+    <textarea id="content" rows="10" cols="30" placeholder="Enter content" name="Content" required>`+ isnull(blogi.Content, '')+`</textarea><br>
     <br>
     <label for="category">Change category:</label>
     <select name="category" id="category">
